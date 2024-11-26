@@ -17,4 +17,6 @@ const USER_SCHEMA = new mongoose.Schema({
 	orders: [mongoose.SchemaTypes.ObjectId]
 });
 
+// USER_SCHEMA.pre("save", async 
+
 export default mongoose.model("User", USER_SCHEMA);
