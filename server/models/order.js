@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 
-const Order = new mongoose.Schema({
-	placed_at: Date,
+const ORDER_SCHEMA = new mongoose.Schema({
+	placedAt: { type: Date, default: Date.now() },
 	total: {
-        amount: Number,
-        currency: String
+        amount: { type: Number, required: true },
+        currency: {
+            type: String,
+            default: "INR",
+            set: (v) => v.toUpperCase()
+        }
     },
-	user_id: Objectid,
-	destination: String,
+	userId: { type: mongoose.SchemaTypes.ObjectId, required: true },
+	deliveryAddress: { type: String, required: true },
 	products: [{
-		product_id: mongoose.SchemaTypes.ObjectId,
-		qty: Number
+		productId: { type: mongoose.SchemaTypes.ObjectId, required: true },
+		qty: { type: Number, required: true }
     }],
-	status: {
-        type: String,
-        enum: ["received", 
-    }
+	status: { type: String, enum: ["received", "kitchen", "dispatched"], default: "received" },
+    paymentStatus: { type: String, enum: ["pending", "completed", "failed"], default: "pending" }
 });
 
 export default mongoose.model("Order", ORDER_SCHEMA);
