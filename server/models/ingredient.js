@@ -4,7 +4,7 @@ const INGREDIENT_SCHEMA = new mongoose.Schema({
     category: { type: String, required: true }, 
     name: { type: String, required: true },
     description: { type: String, required: true },
-    imageUrl: { type: String, default: "/ingredients/ingredientShadow.png" },
+    imageUrl: { type: String },
     price: {
         amount: { type: Number, required: true },
         currency: {

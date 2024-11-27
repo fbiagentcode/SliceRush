@@ -15,7 +15,7 @@ const USER_SCHEMA = new mongoose.Schema({
     },
 	name: { type: String, required: true },
 	password: { type: String, required: true },
-    imageUrl: { type: String, default: "/profiles/profilePictureShadow.png" },
+    imageUrl: { type: String },
 	orders: [mongoose.SchemaTypes.ObjectId]
 });
 
