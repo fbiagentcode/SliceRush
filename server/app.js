@@ -1,14 +1,16 @@
+import "dotenv/config";
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
-import multer from "multer";
 import cookieParser from "cookie-parser";
-
-dotenv.config();
+import products from "./routes/products.js";
 
 mongoose.connect(process.env.CONNECTION_STRING)
-.then(() => console.log("Connected to database."))
+.then(() => {
+    console.log("Connected to database.");
+    app.listen(PORT, () => console.log(`Delivering pizzas on PORT ${PORT}`));
+})
 .catch(err => console.log(err));
 
 const PORT = process.env.PORT || 3000;
@@ -22,7 +24,10 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.use("/products", products);
+
 app.use((err, req, res, next) => {
     console.log(err);
     if (!res.headersSent) res.status(err.code || 500).json({errors: err});
 });
+

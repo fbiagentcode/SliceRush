@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const INGREDIENT_SCHEMA = new mongoose.Schema({
-    category: { type: String, required: true }, 
+    category: { type: String, required: true, index: true }, 
     name: { type: String, required: true },
     description: { type: String, required: true },
     imageUrl: { type: String },
@@ -21,3 +21,4 @@ const INGREDIENT_SCHEMA = new mongoose.Schema({
 });
 
 export default mongoose.model("Ingredient", INGREDIENT_SCHEMA);
+
