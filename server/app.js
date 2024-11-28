@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import products from "./routes/products.js";
 import mongooseErrorHandler from "./middlewares/mongooseErrorHandler.js";
 
-mongoose.connect(process.env.CONNECTION_STRING)
+mongoose.connect(process.env.CONNECTION_STRING, {dbName: 'slice-rush'})
 .then(() => {
     console.log("Connected to database.");
     app.listen(PORT, () => console.log(`Delivering pizzas on PORT ${PORT}`));
@@ -30,6 +30,6 @@ app.use(mongooseErrorHandler);
 
 app.use((err, req, res, next) => {
     console.log(err);
-    if (!res.headersSent) res.status(err.code || 500).json({errors: err.err || err});
+    if (!res.headersSent) res.status(err.code || err.statusCode || 500).json({errors: err.err || err});
 });
 
