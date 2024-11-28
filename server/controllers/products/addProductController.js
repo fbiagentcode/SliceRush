@@ -27,7 +27,7 @@ export default async function addProductController(req, res){
         res.json(product);
         console.log("NEW PRODUCT ADDED!", product);
     }catch(err){
-        res.status(err.code || 500).json({errors: err});
+        res.status(err.code || 500).json({errors: err.err || err});
         console.log(err);
     }
 }
