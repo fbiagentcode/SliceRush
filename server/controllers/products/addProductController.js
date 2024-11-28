@@ -27,7 +27,7 @@ export default async function addProductController(req, res, next){
         console.log("NEW PRODUCT ADDED!", product);
     }catch(err){
         const { data, error } = await bucket.remove(path);
-        if (error) err.errors? err.errors["imageDeletion"] = error.message : err["imageDeletion"] = error.message;
+        if (error) console.log(error);
         next(err);
     }
 }

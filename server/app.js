@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import products from "./routes/products.js";
+import users from "./routes/users.js";
 import mongooseErrorHandler from "./middlewares/mongooseErrorHandler.js";
 
 mongoose.connect(process.env.CONNECTION_STRING, {dbName: 'slice-rush'})
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/products", products);
+app.use("/users", users);
 
 app.use(mongooseErrorHandler);
 
@@ -32,4 +34,6 @@ app.use((err, req, res, next) => {
     console.log(err);
     if (!res.headersSent) res.status(err.code || err.statusCode || 500).json({errors: err.err || err});
 });
+
+app.get("/dummy", (req, res) => req.cookies);
 
