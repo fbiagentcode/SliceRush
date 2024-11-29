@@ -35,5 +35,3 @@ app.use((err, req, res, next) => {
     if (!res.headersSent) res.status(err.code || err.statusCode || 500).json({errors: err.err || err});
 });
 
-app.get("/dummy", (req, res) => req.cookies);
-

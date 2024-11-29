@@ -11,16 +11,23 @@ export default async function addProductController(req, res, next){
     const { body } = req;
     const file = req.file;
     const path = `/products/${file.originalname}`;
+    let imageUrl = null;
+
     try{
         if(file){
             // upload product image to supabase bucket
             const { data, error } = await bucket.upload(path, file.buffer, file.mimetype);
 
             if (error) throw error;
-            body.imageUrl = data.fullPath;
+            imageUrl = data.fullPath;
         }
         // default url
-        else body.imageUrl = `${bucket_id}/products/${type}shadow.png`;
+        else imageUrl = `${bucket_id}/products/${type}shadow.png`;
+
+        // get uploaded image's supabase url
+        const { data: {publicUrl} } = bucket.getPublicUrl(imageUrl);
+        body.imageUrl = publicUrl;
+
         // store product in db
         const product = !pizzaVariety? await Ingredients.create(body) : await pizzaVariants.create(body);
         res.json(product);

@@ -22,6 +22,7 @@ export default async function createUserController(req, res, next){
         // default url
         else imageUrl = `${bucket_id}/users/userIconShadow.jpg`; 
 
+        // get image's public url
         const { data: {publicUrl} } = bucket.getPublicUrl(imageUrl);
         body.imageUrl = publicUrl
 
