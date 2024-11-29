@@ -33,7 +33,8 @@ export default async function createUserController(req, res, next){
             name: user.name,
             imageUrl: user.imageUrl, 
         });
-        res.cookie("auth", auth, {maxAge: 3600}).json(user);
+        res.cookie("auth", auth, {maxAge: 3600*1000, httpOnly: true, secure: false})
+        .json(user);
     }catch(err){
         const { data, error } = await bucket.remove(path);
         if (error) console.log(error);

@@ -4,6 +4,6 @@ export default function authenticate(req, res, next){
     const { auth } = req.cookies;
     if (auth) 
         if(jwt.verify(auth, process.env.JWT_SECRET_KEY))
-            return;
+            return next();
     next(err);
 }
