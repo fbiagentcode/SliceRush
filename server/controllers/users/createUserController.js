@@ -17,7 +17,7 @@ export default async function createUserController(req, res, next){
             const { data, error } = await bucket.upload(path, file.buffer, file.mimetype);
 
             if (error) throw error;
-            imageUrl = data.fullPath;
+            imageUrl = data.path;
         }
         // default url
         else imageUrl = `${bucket_id}/users/userIconShadow.jpg`; 
@@ -35,6 +35,9 @@ export default async function createUserController(req, res, next){
         });
         res.cookie("auth", auth, {maxAge: 3600*1000, httpOnly: true, secure: false})
         .json(user);
+
+        console.log(`New user created at ${Date(Date.now())}`, user);
+        
     }catch(err){
         const { data, error } = await bucket.remove(path);
         if (error) console.log(error);

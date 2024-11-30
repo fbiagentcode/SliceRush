@@ -19,10 +19,10 @@ export default async function addProductController(req, res, next){
             const { data, error } = await bucket.upload(path, file.buffer, file.mimetype);
 
             if (error) throw error;
-            imageUrl = data.fullPath;
+            imageUrl = data.path;
         }
         // default url
-        else imageUrl = `${bucket_id}/products/${type}shadow.png`;
+        else imageUrl = `${bucket_id}/products/${pizzaVariety? "pizzaVariety" : "ingredient"}Shadow.png`;
 
         // get uploaded image's supabase url
         const { data: {publicUrl} } = bucket.getPublicUrl(imageUrl);
@@ -31,7 +31,9 @@ export default async function addProductController(req, res, next){
         // store product in db
         const product = !pizzaVariety? await Ingredients.create(body) : await pizzaVariants.create(body);
         res.json(product);
-        console.log("NEW PRODUCT ADDED!", product);
+
+        console.log(`New PRODUCT added at ${Date(Date.now())}`, product);
+        
     }catch(err){
         const { data, error } = await bucket.remove(path);
         if (error) console.log(error);

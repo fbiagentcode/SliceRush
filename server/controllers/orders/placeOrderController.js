@@ -45,9 +45,12 @@ export default async function placeOrderController(req, res, next){
     await session.commitTransaction();
     await session.endSession();
 
-    res.json({
+    const orderPlaced = {
         orderPlaced: true,
         _id: order._id,
         placedAt: order.placedAt
-    });
+    };
+
+    res.json(orderPlaced);
+    console.log(orderPlaced);
 }
