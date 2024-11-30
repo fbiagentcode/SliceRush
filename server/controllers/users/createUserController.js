@@ -12,6 +12,8 @@ export default async function createUserController(req, res, next){
     const path = `/users/${file?.originalname}`;
     let imageUrl = null;
     try{
+        let user = await Users.create(body);
+
         if(file){
             // upload product image to supabase bucket
             const { data, error } = await bucket.upload(path, file.buffer, file.mimetype);
@@ -22,17 +24,19 @@ export default async function createUserController(req, res, next){
         // default url
         else imageUrl = `${bucket_id}/users/userIconShadow.jpg`; 
 
-        // get image's public url
+        // get image's public url & store in db
         const { data: {publicUrl} } = bucket.getPublicUrl(imageUrl);
-        body.imageUrl = publicUrl
+        user.imageUrl = publicUrl
+        user = await user.save();
 
-        const user = await Users.create(body);
+        // get jwt 
         const auth = genToken({
             role: user.role,
             _id: user._id, 
             name: user.name,
             imageUrl: user.imageUrl, 
         });
+
         res.cookie("auth", auth, {maxAge: 3600*1000, httpOnly: true, secure: false})
         .json(user);
 

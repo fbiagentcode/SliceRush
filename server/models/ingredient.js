@@ -1,7 +1,13 @@
 import mongoose from "mongoose";
 
 const INGREDIENT_SCHEMA = new mongoose.Schema({
-    category: { type: String, required: true, index: true, set: (v) => v.toLowerCase() }, 
+    category: { 
+        type: String, 
+        required: true, 
+        index: true, 
+        enum: ["base", "cheese", "veggie", "sauce"],
+        set: (v) => v.toLowerCase() 
+    }, 
     name: { type: String, required: true },
     description: { type: String, required: true },
     imageUrl: { type: String },
