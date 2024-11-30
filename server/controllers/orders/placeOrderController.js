@@ -8,6 +8,7 @@ export default async function placeOrderController(req, res, next){
     const { body } = req;
     const { products } = body;
     const productIds = products.map(({productId= "N/A"}) => productId);
+    const lowStockItems = [];
 
     // check if user placing order is valid
     const user = await Users.findById(body.userId);
@@ -32,6 +33,9 @@ export default async function placeOrderController(req, res, next){
         const product = products.find((product) => String(product.productId) === String(ingredient._id));
         // set actual stock for each product ordered to use later
         product["stock"] = ingredient?.stock?.amount - product.qty;
+        
+        // add ingredient to low stock list
+        if (product.stock <= ingredient.stock?.threshold) lowStockItems.push(ingredient);
         if (product.stock < 0){
             const err = {};
             err[ingredient.name] = "Insufficient stock.";
@@ -66,6 +70,8 @@ export default async function placeOrderController(req, res, next){
 
     await session.commitTransaction();
     await session.endSession();
+
+    
 
     const orderPlaced = {
         orderPlaced: true,
