@@ -2,7 +2,13 @@ import mongoose from "mongoose";
 
 const PIZZA_VARIETY_SCHEMA = new mongoose.Schema({
     name: { type: String, required: true },
-	ingredients: { type: [mongoose.SchemaTypes.ObjectId], ref: "Ingredient", required: true },
+	ingredients: { 
+        type: [mongoose.SchemaTypes.ObjectId], 
+        ref: "Ingredient", 
+        required: true,
+        set: (id) => id instanceof mongoose.Types.ObjectId? id : 
+            new mongoose.Types.ObjectId(`${id}`) 
+    },
 	description: { type: String, required: true },
 	imageUrl: { type: String },
 	total: {
