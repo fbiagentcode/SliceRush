@@ -29,8 +29,10 @@ export default async function placeOrderController(req, res, next){
     
     // do not place order if stock requirements not met
     ingredientsOrdered.forEach(ingredient => {
-        const product = products.find(({productId}) => String(productId) === String(ingredient._id));
-        if (ingredient?.stock?.amount - product.qty < 0){
+        const product = products.find((product) => String(product.productId) === String(ingredient._id));
+        // set actual stock for each product ordered to use later
+        product["stock"] = ingredient?.stock?.amount - product.qty;
+        if (product.stock < 0){
             const err = {};
             err[ingredient.name] = "Insufficient stock.";
             return next({err, code: 422});
@@ -48,13 +50,14 @@ export default async function placeOrderController(req, res, next){
     await user.save();
 
     // create bulk update stock queries
-    const writes = products.map(({ productId, qty }) => {
+    const writes = products.map(({ productId, qty, stock }) => {
         return {
             updateOne: {
                 filter: { _id: productId },
                 update: { 
-                    $inc: { "stock.amount": -qty }
-                }
+                    $inc: { "stock.amount": -qty },
+                    $set: { isAvailable: Boolean(stock) }
+                }   
             }
         }
     });
@@ -73,3 +76,4 @@ export default async function placeOrderController(req, res, next){
     res.json(orderPlaced);
     console.log(orderPlaced);
 }
+

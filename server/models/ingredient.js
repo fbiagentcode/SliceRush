@@ -26,18 +26,5 @@ const INGREDIENT_SCHEMA = new mongoose.Schema({
     isAvailable: { type: Boolean, required: true }
 });
 
-INGREDIENT_SCHEMA.post("updateOne", async function(res, next){
-    const filter = this.getFilter();
-    const session = this.getOptions().session
-
-    const ingredient = await this.model.findOne(filter);
-    if (!ingredient) return next();
-    if (ingredient.stock?.amount <= 0){
-        ingredient.isAvailable = false;
-        await ingredient.save({session});
-    }
-    next();
-});
-
 export default mongoose.model("Ingredient", INGREDIENT_SCHEMA);
 

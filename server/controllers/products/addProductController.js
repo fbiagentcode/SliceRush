@@ -26,7 +26,7 @@ export default async function addProductController(req, res, next){
             imageUrl = data.path;
         }
         // default url
-        else imageUrl = `${bucket_id}/products/${pizzaVariety? "pizzaVariety" : "ingredient"}Shadow.png`;
+        else imageUrl = `/products/${pizzaVariety? "pizzaVariety" : "ingredient"}Shadow.png`;
 
         // get uploaded image's supabase url & store in db
         const { data: {publicUrl} } = bucket.getPublicUrl(imageUrl);
