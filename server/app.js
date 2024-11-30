@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import products from "./routes/products.js";
 import users from "./routes/users.js";
 import orders from "./routes/orders.js";
+import auth from "./routes/auth.js";
 import mongooseErrorHandler from "./middlewares/mongooseErrorHandler.js";
 
 mongoose.connect(process.env.CONNECTION_STRING, {dbName: 'slice-rush'})
@@ -29,6 +30,7 @@ app.use(cookieParser());
 app.use("/products", products);
 app.use("/users", users);
 app.use("/orders", orders);
+app.use("/auth", auth);
 
 app.use(mongooseErrorHandler);
 
