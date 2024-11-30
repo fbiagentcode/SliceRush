@@ -38,10 +38,9 @@ export default async function placeOrderController(req, res, next){
             }
         }
     });
-    // console.log(writes[0].updateOne.update);
 
     await Ingredients.bulkWrite(writes, {session});
-    // await pizzaVarieties.bulkWrite(writes, {session});
+    await pizzaVarieties.bulkWrite(writes, {session});
 
     await session.commitTransaction();
     await session.endSession();
