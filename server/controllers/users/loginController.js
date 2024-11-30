@@ -5,7 +5,7 @@ export default async function loginController(req, res, next){
    
     // send back error if credentials not provided
     if (!email || !password) 
-        return next({err: "Email and password are required.", code: 409});
+        return next({err: "Email and password are required.", code: 400});
 
     const user = await Users.login(email, password);
 
