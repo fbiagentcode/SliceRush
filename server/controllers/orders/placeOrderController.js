@@ -3,6 +3,7 @@ import Orders from "../../models/order.js";
 import Ingredients from "../../models/ingredient.js";
 import Users from "../../models/user.js";
 import pizzaVarieties from "../../models/pizzaVariety.js";
+import sendMail from "../../utils/sendMail.js";
 
 export default async function placeOrderController(req, res, next){
     const { body } = req;
@@ -35,7 +36,7 @@ export default async function placeOrderController(req, res, next){
         product["stock"] = ingredient?.stock?.amount - product.qty;
         
         // add ingredient to low stock list
-        if (product.stock <= ingredient.stock?.threshold) lowStockItems.push(ingredient);
+        if (product.stock <= ingredient.stock?.threshold) lowStockItems.push({ingredient, newStock: product.stock});
         if (product.stock < 0){
             const err = {};
             err[ingredient.name] = "Insufficient stock.";
@@ -71,7 +72,20 @@ export default async function placeOrderController(req, res, next){
     await session.commitTransaction();
     await session.endSession();
 
-    
+    // send email alerts to admin on low stock items
+    const lowStockCount = lowStockItems.length;
+    if (lowStockCount){
+        const mail = { subject: `Alert: ${lowStockCount} INGREDIENTS ON LOW STOCK` };
+        // create body for mail
+        mail.content = "<h1>These ingredients require restocking ASAP: </h1>" + "<ul>"
+        lowStockItems.forEach(({ingredient, newStock}) => {
+            return (
+                mail.content += `<li>${ingredient.name} - Stock: ${ingredient.stock?.amount - newStock}</li>`
+            );
+        });
+        mail.content += "</ul><p>Restock now at the dashboard: <a href= link</a></p>";
+        await sendMail(mail);
+    }
 
     const orderPlaced = {
         orderPlaced: true,
