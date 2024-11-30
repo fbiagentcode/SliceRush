@@ -13,6 +13,8 @@ export default async function addProductController(req, res, next){
     const path = `/products/${file.originalname}`;
     let imageUrl = null;
 
+    console.log("body", body);
+
     try{
         // store product in db
         let product = !pizzaVariety? await Ingredients.create(body) : await pizzaVariants.create(body);
