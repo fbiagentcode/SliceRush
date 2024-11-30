@@ -9,7 +9,7 @@ const USER_SCHEMA = new mongoose.Schema({
         type: String, 
         required: true, 
         unique: true, 
-        set: (v) => v.toUpperCase(),
+        set: (v) => v.toLowerCase(),
         get: hideEmail, 
         validate: [(email) => validator.isEmail(email), "Invalid email format."]
     },
@@ -25,7 +25,7 @@ USER_SCHEMA.pre("save", async function(next){
 });
 
 USER_SCHEMA.statics.login = async function login(email, password){
-    const user = await this.findOne({email});
+    const user = await this.findOne({email: email?.toLowerCase()});
     if (!user) return null;
     return await bcrypt.compare(password, user.password) && user;
 };
