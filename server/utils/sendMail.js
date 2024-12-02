@@ -13,7 +13,7 @@ export default async function sendMail(mail){
 
     const mailInfo = await transport.sendMail({
         from: "Slice Rush <slicerush@gmail.com>",
-        to: process.env.ADMIN_USER + "@inbox.mailtrap.io",
+        to: mail.to,
         subject: mail.subject,
         html: mail.content
     })

@@ -17,11 +17,11 @@ router.route("/ingredients")
 .get(viewIngredientsController)
 .delete(authenticate, deleteIngredientsController);
 
-router.route("/ingredients/:id")
-.put(authenticate, upload.single("image"), updateIngredientByIdController);
-
 router.route("/ingredients/stock")
 .put(authenticate, increaseIngredientStockController);
+
+router.route("/ingredients/:id")
+.put(authenticate, upload.single("image"), updateIngredientByIdController);
 
 router.route("/pizzaVarieties")
 .get(viewPizzaVarietiesController)

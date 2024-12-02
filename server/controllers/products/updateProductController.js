@@ -16,7 +16,7 @@ export async function updatePizzaVarietyByIdController(req, res, next){
 
 async function updateProductController(productType, id, update, req, res, next){
     const { user } = req;
-    if (req.role !== "admin") return next({err: "Not authorized to update products. Contact admin.", code: 401});
+    if (user.role !== "admin") return next({err: "Not authorized to update products. Contact admin.", code: 401});
     
     try{
     // check if product exists

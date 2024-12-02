@@ -2,11 +2,9 @@ import mongoose from "mongoose";
 import Ingredients from "../../models/ingredient.js";
 import pizzaVarieties from "../../models/pizzaVariety.js";
 
-const supabaseClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-
 export default async function increaseIngredientStockController(req, res, next){
     const { user } = req;
-    if (req.role !== "admin") return next({err: "Not authorized to update products. Contact admin.", code: 401});
+    if (user.role !== "admin") return next({err: "Not authorized to update products. Contact admin.", code: 401});
    
     const ingredients = req.body;
     const ids = ingredients.map(({id}) => id);
@@ -38,9 +36,8 @@ export default async function increaseIngredientStockController(req, res, next){
     }
     catch(err){
         next(err);
-    }
-    finally{
         session.abortTransaction();
     }
+
 }
 

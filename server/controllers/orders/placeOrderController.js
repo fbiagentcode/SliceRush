@@ -76,7 +76,10 @@ export default async function placeOrderController(req, res, next){
         // send email alerts to admin on low stock items
         const lowStockCount = lowStockItems.length;
         if (lowStockCount){
-            const mail = { subject: `Alert: ${lowStockCount} INGREDIENTS ON LOW STOCK` };
+            const mail = { 
+                subject: `Alert: ${lowStockCount} INGREDIENTS ON LOW STOCK`,
+                to: process.env.ADMIN_USER + "@inbox.mailtrap.io" 
+            };
             // create body for mail
             mail.content = "<h1>These ingredients require restocking ASAP: </h1>" + "<ul>"
             lowStockItems.forEach(({ingredient, newStock}) => {
