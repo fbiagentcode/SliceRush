@@ -2,7 +2,9 @@ import genToken from "../../utils/genToken.js";
 import sendMail from "../../utils/sendMail.js";
 export default function forgotPasswordController(req, res, next){
     try{
-        const { email } = req.params;
+        const { email } = req.body;
+        // check if email is provided
+        if (!email) return next({err: "Email is required.", code: 400});
         // get token
         const token = genToken({email});
     

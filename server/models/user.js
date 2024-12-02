@@ -24,6 +24,13 @@ USER_SCHEMA.pre("save", async function(next){
     next();
 });
 
+USER_SCHEMA.pre("findOneAndUpdate", async function(next){
+    const update = this.getUpdate();
+    if (update.password)
+        update.password = await bcrypt.hash(update.password, 10);
+    next();
+});
+
 USER_SCHEMA.statics.login = async function login(email, password){
     const user = await this.findOne({email: email?.toLowerCase()});
     if (!user) return null;
