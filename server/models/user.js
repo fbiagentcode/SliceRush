@@ -4,6 +4,7 @@ import hideEmail from "../utils/hideEmail.js";
 import bcrypt from "bcrypt";
 
 const USER_SCHEMA = new mongoose.Schema({
+    expiresAt: { type: Date, default: Date.now() + 30*1000, expires: 0 },
 	role: { type: String, enum: ["customer", "admin"], default: "customer" },
 	email: { 
         type: String, 
