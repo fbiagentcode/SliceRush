@@ -4,6 +4,7 @@ import authenticate from "../middlewares/authenticate.js";
 import addProductController from "../controllers/products/addProductController.js";
 import { viewIngredientsController, viewPizzaVarietiesController } from "../controllers/products/viewProductsController.js";
 import { deleteIngredientsController, deletePizzaVarietiesController } from "../controllers/products/deleteProductsController.js";
+import { updateIngredientByIdController, updatePizzaVarietyByIdController } from "../controllers/products/updateProductController.js";
 
 const router = express.Router();
 const upload = multer(multer.memoryStorage());
@@ -15,9 +16,14 @@ router.route("/ingredients")
 .get(viewIngredientsController)
 .delete(authenticate, deleteIngredientsController);
 
+router.route("/ingredients/:id")
+.put(upload.single("image"), updateIngredientByIdController);
+
 router.route("/pizzaVarieties")
 .get(viewPizzaVarietiesController)
 .delete(authenticate, deletePizzaVarietiesController);
 
+router.route("/pizzaVarieties/:id")
+.put(upload.single("image"), updatePizzaVarietyByIdController);
 
 export default router;
