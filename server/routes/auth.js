@@ -1,11 +1,17 @@
 import express from "express";
 import authenticate from "../middlewares/authenticate.js";
+import signUpController from "../controllers/auth/signUpController.js";
+import confirmationController from "../controllers/auth/confirmationController.js";
 import loginController from "../controllers/auth/loginController.js";
 import logoutController from "../controllers/auth/logoutController.js";
 import forgotPasswordController from "../controllers/auth/forgotPasswordController.js";
 import resetPasswordController from "../controllers/auth/resetPasswordController.js";
 
 const router = express.Router();
+
+router.post("/sign-up", signUpController);
+
+router.post("/confirmation", confirmationController);
 
 router.post("/login", loginController);
 
