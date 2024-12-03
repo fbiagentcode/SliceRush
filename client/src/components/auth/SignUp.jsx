@@ -28,8 +28,6 @@ export default function SignUp(){
                 headers: { "Content-Type": "application/json" }
             }
         );
-        // test
-        // console.log("user login, error", user, error);
         if (result) setCreated(true);
     };
 
@@ -42,7 +40,7 @@ export default function SignUp(){
     // test effects
     useEffect(() => console.log("email", email, password, error), [email, password]);
 
-    return ( created? <Confirmation signUp= {signUp} name= {name} /> : <Card>
+    return ( created? <Confirmation user= { {name, email} } /> : <Card>
         <CardHeader>Create an account today!</CardHeader>
         <CardContent>
             <InputWithLabel 
