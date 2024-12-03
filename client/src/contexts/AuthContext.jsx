@@ -2,7 +2,7 @@ import { createContext, useReducer, useEffect } from "react";
 export const authContext = createContext(null);
 
 export default function AuthContextProvider({children}){
-    const [ user, dispatch ] = useReducer(authReducer);
+    const [ user, dispatch ] = useReducer(authReducer, null);
 
     useEffect(() => {
         if (!user){
@@ -12,6 +12,7 @@ export default function AuthContextProvider({children}){
         }
     }, [])
 
+    // test effect
     useEffect(() => console.log("auth", user));
 
     return <authContext.Provider value= { { user, dispatch } }>
@@ -29,7 +30,7 @@ function authReducer(state, {payload, type}){
                 imageUrl: payload.imageUrl
             };
             localStorage.setItem("user", JSON.stringify(user));
-            return { _id, role, name, imageUrl };
+            return user;
         case "LOGOUT":
             localStorage.removeItem("user");
             return null;

@@ -8,10 +8,13 @@ export default function useFetch(){
             setIsLoading(true);
             setError(null);
             const response = await fetch(endpoint, {signal, ...options, credentials: "include"});
+            const result = await response.json();
+            // return data
             if (response.ok){
-                const result = await response.json();
                 return result;
             }
+            // set error response
+            setError(result);
         }catch(err){
             setError({err});
         }
