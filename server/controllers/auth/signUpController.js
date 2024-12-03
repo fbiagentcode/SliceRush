@@ -11,6 +11,7 @@ export default async function signUpController(req, res, next){
     const bucket = supabaseClient.storage.from(bucket_id);
 
     try{
+        
         // default img url
         const imageUrl = `users/userIconShadow.jpg`; 
 
@@ -35,7 +36,7 @@ export default async function signUpController(req, res, next){
         const mail = {
             to: body.email,
             subject: "Confirm your Slice Rush account registration",
-            content: `<h1>Your Slice Rush account is almost complete!</h1>
+            content: `<h1>Your Slice Rush account registration is almost complete!</h1>
             <p>Click this link to complete registration. Link will be valid only for the next hour. 
             <a href=${link}>${link}</a>`
         };
