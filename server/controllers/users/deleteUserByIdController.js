@@ -17,9 +17,11 @@ export default async function deleteUserByIdController(req, res, next){
             if (!deleted) return next({err: "Account does not exist.", code: 404});
             
             const imagePath =  deleted.imageUrl.split(bucketId + "/")[1];
-            // delete pfp
-            const { error } = await bucket.remove(imagePath);
-            if (error) return next(error);
+            if (imagePath !== `users/userIconShadow.jpg`){
+                // delete pfp if not default
+                const { error } = await bucket.remove(imagePath);
+                if (error) return next(error);
+            }
 
             console.log("Deleted account" , deleted.email , "at", Date(Date.now()));
             res.json(deleted);
