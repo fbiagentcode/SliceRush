@@ -1,5 +1,8 @@
 import genToken from "../../utils/genToken.js";
 import sendMail from "../../utils/sendMail.js";
+
+const origin = "http://localhost:5173"
+
 export default function forgotPasswordController(req, res, next){
     try{
         const { email } = req.body;
@@ -8,7 +11,7 @@ export default function forgotPasswordController(req, res, next){
         // get token
         const token = genToken({email});
     
-        const link = `${process.env.ORIGIN}/reset-password?token=${token}`;
+        const link = `${origin}/reset-password/?token=${token}`;
         const mail = {
             to: email,
             subject: "Slice Rush - Confirm password reset",

@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext.jsx";
 import Login from "./components/auth/Login.jsx";
-import SignUp from "./components/auth/SignUp.jsx";
+import ResetPassword from "./components/auth/ResetPassword.jsx";
 import './index.css'
 
 
@@ -10,6 +10,7 @@ function App() {
     <AuthContextProvider>
         <Routes>
             <Route path="/" element= { <Login/> } />
+            <Route path="/reset-password" element= { <ResetPassword/> } />
         </Routes>
     </AuthContextProvider>
   )
