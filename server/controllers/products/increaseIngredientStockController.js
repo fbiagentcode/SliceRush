@@ -31,7 +31,7 @@ export default async function increaseIngredientStockController(req, res, next){
     
         const result = await Ingredients.bulkWrite(writes, {session});
         await session.commitTransaction();
-        res.json(result);
+        res.json({success: true, message: "Stock updated!"});
         console.log(result);
     }
     catch(err){
