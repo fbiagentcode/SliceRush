@@ -1,8 +1,11 @@
 import { useState, useEffect, useContext, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { authContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
 
+import ForgotPassword from "./ForgotPassword";
+import SignUp from "./SignUp";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import ButtonLoading from "../ui/ButtonLoading";
@@ -13,6 +16,7 @@ const origin = import.meta.env.VITE_ORIGIN;
 export default function Login(){
     const { dispatch } = useContext(authContext);
     const { fetchHandler, isLoading, error } = useFetch();
+    const [ searchParams, setSearchParams ] = useSearchParams();
     const controller = useRef();
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
@@ -25,8 +29,7 @@ export default function Login(){
                 headers: { "Content-Type": "application/json" }
             }
         );
-        // test
-        // console.log("user login, error", user, error);
+
         if (user) dispatch({type: "LOGIN", payload: user});
     };
 
@@ -36,10 +39,10 @@ export default function Login(){
         return () => controller.current.abort();
     }, []);
 
-    // test effects
-    useEffect(() => console.log("email", email, password), [email, password]);
+    const isForgotPassword = searchParams.get("forgotPassword");
+    const isSignUp = searchParams.get("signUp");
 
-    return <Card>
+    return isForgotPassword? <ForgotPassword/> : isSignUp? <SignUp/> : <Card>
         <CardHeader>LOGIN</CardHeader>
         <CardContent>
             <InputWithLabel 
@@ -61,10 +64,19 @@ export default function Login(){
         <CardFooter>
             { isLoading? <ButtonLoading/> :
             <Button onClick= { () => login() }>Login</Button> }
+            <p 
+                onClick= { () => setSearchParams({"forgotPassword": true}) }
+            >
+                Forgot password?
+            </p>
             <hr/>
             <p>OR</p>
             <p>Don't have an account? </p>
-            <Button>Sign Up</Button>
+            <Button 
+                onClick= { () => setSearchParams({"signUp": true}) }
+            >
+                Sign Up
+            </Button>
         </CardFooter>
     </Card>
 }

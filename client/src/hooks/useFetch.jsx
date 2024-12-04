@@ -23,5 +23,5 @@ export default function useFetch(){
         }
     };
 
-    return { fetchHandler, error, isLoading };
+    return { fetchHandler, error, setError, isLoading };
 }

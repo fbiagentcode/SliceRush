@@ -2,18 +2,18 @@ import { useState, useEffect, useRef } from "react";
 
 import useFetch from "../../hooks/useFetch";
 
-import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
+import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import ButtonLoading from "../ui/ButtonLoading";
 
-export default function Confirmation({ user: {email, name} }){
+export default function Confirmation({ user: {email, name}, children, route }){
     const { fetchHandler, isLoading, error } = useFetch();
     const [ mailSent, setMailSent ] = useState(false);
     const controller = useRef();
 
     const resendMail = async () => {
         setMailSent(false);
-        const result = await fetchHandler(`${origin}/auth/resend-confirmation-mail`, controller.current.signal,
+        const result = await fetchHandler(route, controller.current.signal,
             {
                 method: "POST",
                 body: JSON.stringify({ email, name }),
@@ -32,11 +32,12 @@ export default function Confirmation({ user: {email, name} }){
     return <Card>
         <CardContent>
             <img src="/images/mailSent.png" alt="mail sent" />
-            <h1>You're one step away</h1>
-            <p>from a delicious pizza {name}. Check your mail to confirm account registration. </p>
-            <p>Click the button below to resend an email if you do not see anything within the next 10 minutes.</p>
-            { isLoading? <ButtonLoading/> : <Button onClick= { () => resendMail() }>Resend Email</Button> }
-            { mailSent && <p>Mail sent to your inbox.</p> }
+            { children }
+            { isLoading? <ButtonLoading/> : <Button onClick= { () => resendMail(route) }>Resend Email</Button> }
         </CardContent>
+        <CardFooter>
+            { mailSent && <p>A confirmation mail has been sent to your inbox.</p> }
+            { error && error.errors }
+        </CardFooter>
     </Card>
 }

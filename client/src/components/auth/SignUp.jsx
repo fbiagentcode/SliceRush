@@ -37,10 +37,11 @@ export default function SignUp(){
         return () => controller.current.abort();
     }, []);
 
-    // test effects
-    useEffect(() => console.log("email", email, password, error), [email, password]);
-
-    return ( created? <Confirmation user= { {name, email} } /> : <Card>
+    return ( created? <Confirmation 
+        user= { {name, email} } 
+        route= { `${origin}/auth/resend-confirmation-mail` }>
+            <SignUpConfirmation name= {name} />
+        </Confirmation> : <Card>
         <CardHeader>Create an account today!</CardHeader>
         <CardContent>
             <InputWithLabel 
@@ -76,6 +77,14 @@ export default function SignUp(){
     </Card>)
 }
 
+function SignUpConfirmation({name}){
+    return (<>
+        <h1>You're one step away</h1>   
+        <p>from a delicious pizza {name}. Check your mail to confirm account registration. </p>
+        <p>Click the button below to resend an email if you do not see anything within the next 10 minutes.</p>
+    </>)
+}
+
 function InputErrorField({field, errorMsg}){
     const text = errorMsg.split(`${field}\``)[1];
 
@@ -84,3 +93,4 @@ function InputErrorField({field, errorMsg}){
         <p>{errorMsg}</p> }
     </>)
 }
+
