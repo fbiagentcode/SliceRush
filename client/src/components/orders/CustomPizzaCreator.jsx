@@ -47,20 +47,19 @@ export default function CustomPizzaCreator({products}){
             
             const cartItems = new Map(cart.products.map((product) => [product._id, product]));
 
-            const veggieIds = veggies.map(({_id}) => _id);
-            const ids = [cheese._id, base._id, sauce._id, ...veggieIds];
+            const pizzaIngredients = [cheese, base, sauce, ...veggies];
             
-            ids.forEach((id) => {
+            pizzaIngredients.forEach(({_id, name}) => {
                 // update stock if ingredient already in cart
-                if(cartItems.has(id)){
-                    cartItems.get(id).qty += 1;
+                if(cartItems.has(_id)){
+                    cartItems.get(_id).qty += 1;
                     return;
                 }
                 // add to cart
-                cart.products.push({_id: id, qty: 1});
+                cart.products.push({_id, name, qty: 1});
 
                 // update map
-                cartItems.set(id, {id, qty: 1})
+                cartItems.set(_id, {_id, name, qty: 1})
             }); 
 
             return {amount: cart.amount, ...cart.products};

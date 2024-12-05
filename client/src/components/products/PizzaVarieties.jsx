@@ -6,21 +6,21 @@ import Product from "./Product";
 export default function PizzaVarieties({products}){
     return <div>
         { products.map((val, i) => <Product key= {i} product= {val}>
-            <PizzaVarietyCounter productId= {val._id} />
+            <PizzaVarietyCounter product= {val} />
         </Product>) }
     </div>
 }
 
 /** Counter to update pizza variety qty in cart */
-function PizzaVarietyCounter({productId}){
+function PizzaVarietyCounter({ product: {_id, name} }){
     const { setCart } = useContext(cartContext);
 
     const setQty = (count) => {
         setCart(cart => {
-            const product = cart.products?.find((product) => product._id === productId);
+            const product = cart.products?.find((product) => product._id === _id);
             // add item to cart
             if (!product){
-                cart.products?.push({_id: productId, qty: count});
+                cart.products?.push({_id, name, qty: count});
                 return {...cart};
             }
             // remove from cart qty stock reduced to 0

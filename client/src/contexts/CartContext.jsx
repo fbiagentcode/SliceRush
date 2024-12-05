@@ -1,7 +1,10 @@
 import { createContext, useState } from "react";
-export const cartContext = createContext({});
+
+const cartDefault = {amount: 0, products: []};
+export const cartContext = createContext(cartDefault);
+
 export default function CartContextProvider({children}){
-    const [ cart, setCart ] = useState({});
+    const [ cart, setCart ] = useState(cartDefault);
 
     return <cartContext.Provider value= { {cart, setCart} } >
         {children}
