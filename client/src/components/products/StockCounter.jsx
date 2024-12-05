@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+
 import { Button } from "../ui/button";
 
-
 /** A counter component for product stock */
-export default function StockCounter({setCart}){
-    const [setCount, count] = useState(0);
+export default function StockCounter({setQty}){
+    const [ count, setCount ] = useState(0);
+
+    useEffect(() => {
+        setQty(count);
+    }, [count])
 
     const updateCount = (inc= true) => {
         const value = inc? 1 : -1;
