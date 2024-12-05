@@ -4,15 +4,18 @@ import { cartContext } from "../../contexts/CartContext";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 
+/** Displays current cart */
 export default function Cart(){
-    const { cart, setCart } = useContext(cartContext);
+    const { cart } = useContext(cartContext);
 
     return <Card>
         <CardHeader>
+            <Button>X</Button>
             <h1>Your selected items:</h1>
         </CardHeader>
         <CardContent>
-            { cart.products?.map((
+            { cart.products?.map(({_id, name, qty}, i) => 
+                <FieldValueRow key= {i} field= {name} value= {qty} />) }
         </CardContent>
         <CardFooter>
             <FieldValueRow field= "Total" value= {cart.amount} />

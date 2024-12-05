@@ -46,7 +46,7 @@ export default function ForgotPassword(){
         <CardContent>
             <p>Please enter your email address to confirm password reset.</p>
             <InputWithLabel 
-                fieldName= "Email" 
+                fieldName= "Email:" 
                 fieldValue= {email} 
                 setField= {setEmail} 
                 type="email" 

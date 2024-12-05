@@ -47,14 +47,14 @@ export default function Login(){
         <CardContent>
             <InputWithLabel 
                 type="email"
-                fieldName= "Email"
+                fieldName= "Email:"
                 fieldValue= {email} 
                 setField= {setEmail}
                 required
             />
             <InputWithLabel 
                 type="password"
-                fieldName= "Password"
+                fieldName= "Password:"
                 fieldValue= {password} 
                 setField= {setPassword}
                 required

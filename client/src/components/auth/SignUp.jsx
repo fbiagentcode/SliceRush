@@ -46,7 +46,7 @@ export default function SignUp(){
         <CardContent>
             <InputWithLabel 
                 type="email"
-                fieldName= "Email"
+                fieldName= "Email:"
                 fieldValue= {email} 
                 setField= {setEmail}
                 required
@@ -54,7 +54,7 @@ export default function SignUp(){
             { error?.errors?.email && <InputErrorField field= "email" errorMsg= { error?.errors?.email } /> }
             <InputWithLabel 
                 type="text"
-                fieldName= "Name"
+                fieldName= "Name:"
                 fieldValue= {name} 
                 setField= {setName}
                 required
@@ -63,7 +63,7 @@ export default function SignUp(){
 
             <InputWithLabel 
                 type="password"
-                fieldName= "Password"
+                fieldName= "Password:"
                 fieldValue= {password} 
                 setField= {setPassword}
                 required

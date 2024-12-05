@@ -44,13 +44,13 @@ export default function ResetPassword(){
         </CardHeader>
         <CardContent>
             <InputWithLabel
-                fieldName= "New Password"
+                fieldName= "New Password:"
                 fieldValue= {password}
                 setField= {setPassword}
                 type= "password"
             />
             <InputWithLabel
-                fieldName= "Confirm Password"
+                fieldName= "Confirm Password:"
                 fieldValue= {confirmPassword}
                 setField= {setConfirmPassword}
                 type= "password"
