@@ -1,6 +1,6 @@
 import { Carousel, CarouselNext, CarouselPrevious, CarouselContent } from "../ui/carousel";
 import Product from "./Product";
-export default function ProductList({products, onItemClick, children}){
+export default function ProductCarousel({products, onItemClick, children}){
     return <Carousel>
         <CarouselContent>
             { products.map((product, i) => (<Product 

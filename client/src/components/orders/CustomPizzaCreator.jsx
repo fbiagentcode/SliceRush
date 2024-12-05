@@ -1,10 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useContext, useMemo } from "react";
 
-import ProductList from "../products/ProductList";
+import { cartContext } from "../../contexts/CartContext";
+import ProductCarousel from "../products/ProductCarousel";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 
-export default function CustomPizza({products, setCart}){
+export default function CustomPizzaCreator({products}){
+    const { setCart } = useContext(cartContext);
     const [ error, setError ] = useState(null);
     // states for selected ingredients
     const [ cheese, setCheese ] = useState(null);
@@ -71,19 +73,19 @@ export default function CustomPizza({products, setCart}){
         </CardHeader>
         <CardContent>
             <p>Start by picking a base.</p>
-            <ProductList products= {bases} onItemClick= {(base) => setBase(base)}/>
+            <ProductCarousel products= {bases} onItemClick= {(base) => setBase(base)}/>
             { error?.base && <p>{error.base}</p> }
 
             <p>Pick a cheese type.</p>
-            <ProductList products= {cheeses} onItemClick= {(cheese) => setCheese(cheese)}/>
+            <ProductCarousel products= {cheeses} onItemClick= {(cheese) => setCheese(cheese)}/>
             { error?.cheese && <p>{error.cheese}</p> }
 
             <p>Now for the sauce.</p>
-            <ProductList products= {sauces} onItemClick= {(sauce) => setSauce(sauce)}/>
+            <ProductCarousel products= {sauces} onItemClick= {(sauce) => setSauce(sauce)}/>
             { error?.sauce && <p>{error.sauce}</p> }
 
             <p>Finally, veggies.</p>
-            <ProductList products= {veggies} onItemClick= {addVeggie}/>
+            <ProductCarousel products= {veggies} onItemClick= {addVeggie}/>
             { error?.veggies && <p>{error.veggies}</p> }
         </CardContent>
         <CardFooter>
