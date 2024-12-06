@@ -23,6 +23,7 @@ export default function AuthContextProvider({children}){
 function authReducer(state, {payload, type}){
     switch (type){
         case "LOGIN":
+        case "UPDATE":
             const user = { 
                 _id: payload._id, 
                 role: payload.role, 
