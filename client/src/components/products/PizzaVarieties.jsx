@@ -19,7 +19,7 @@ function PizzaVarietyCounter({ product: {_id, name} }){
         setCart(cart => {
             const product = cart.products?.find((product) => product._id === _id);
             // add item to cart
-            if (!product){
+            if (!product && count){
                 cart.products?.push({_id, name, qty: count});
                 return {...cart};
             }
@@ -27,7 +27,7 @@ function PizzaVarietyCounter({ product: {_id, name} }){
             if (!count) 
                 cart.products = cart.products?.filter((val) => val._id !== product._id);
             // update qty
-            else product.qty += count;
+            else product.qty = count;
             return {...cart};
         });
     };

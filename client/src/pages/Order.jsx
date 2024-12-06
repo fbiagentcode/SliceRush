@@ -16,12 +16,15 @@ export default function Order(){
     const controller = useRef();
     const navigate = useNavigate();
 
+    const [ pizzaCreatorOpen, setPizzaCreatorOpen ] = useState(false);
+
     const getProducts = async () => {
-        await fetchProducts(controller.current.signal);
-        console.log(ingredients);
+        const fetchedIngredients = await fetchProducts(controller.current.signal);
+        console.log(fetchedIngredients);
+
         controller.current = new AbortController();
-        console.log(pizzaVarieties);
-        fetchProducts(controller.current.signal, {pizzaVarieties: true});
+        const fetchedPizzas = await fetchProducts(controller.current.signal, {pizzaVarieties: true});
+        console.log(fetchedPizzas);
     };
 
     useEffect(() => {
@@ -42,6 +45,9 @@ export default function Order(){
                     <Button>View Cart</Button>
                 </DialogTrigger>
                 <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Cart</DialogTitle>
+                    </DialogHeader>
                     <Cart/>
                 </DialogContent>
             </Dialog>
@@ -51,12 +57,15 @@ export default function Order(){
                     <Button>Order Now</Button>                
                 </DialogTrigger>
                 <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Confirm Order Details:</DialogTitle>
+                    </DialogHeader>
                     <OrderConfirmation/>
                 </DialogContent>
             </Dialog>
         </div>
         <div>
-            <Dialog>
+            <Dialog open= {pizzaCreatorOpen} onOpenChange= {setPizzaCreatorOpen}>
                 <DialogTrigger asChild>
                     <Button>Create your own pizza!</Button>
                 </DialogTrigger>
@@ -64,7 +73,7 @@ export default function Order(){
                     <DialogHeader>
                         <DialogTitle>Customize your pizza!</DialogTitle>
                     </DialogHeader>
-                    <CustomPizzaCreator products= {ingredients}/>
+                    <CustomPizzaCreator products= {ingredients} setOpen= {setPizzaCreatorOpen}/>
                 </DialogContent>
             </Dialog>
             <p>Or, pick from the many delicious pizzas available</p>

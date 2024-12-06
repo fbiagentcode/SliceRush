@@ -6,7 +6,7 @@ const PIZZA_VARIETY_SCHEMA = new mongoose.Schema({
         type: [mongoose.SchemaTypes.ObjectId], 
         ref: "Ingredient", 
         required: true,
-        set: (ids) => ids.map(id => id instanceof mongoose.Types.ObjectId? id : 
+        set: (ids) => ids.split(",").map(id => id instanceof mongoose.Types.ObjectId? id : 
             new mongoose.Types.ObjectId(`${id}`))
     },
 	description: { type: String, required: true },

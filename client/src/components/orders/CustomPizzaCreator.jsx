@@ -5,7 +5,7 @@ import ProductCarousel from "../products/ProductCarousel";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 
-export default function CustomPizzaCreator({products}){
+export default function CustomPizzaCreator({products, setOpen}){
     const { setCart } = useContext(cartContext);
     const [ error, setError ] = useState(null);
     // states for selected ingredients
@@ -62,8 +62,9 @@ export default function CustomPizzaCreator({products}){
                 cartItems.set(_id, {_id, name, qty: 1})
             }); 
 
-            return {amount: cart.amount, ...cart.products};
+            return {amount: cart.amount, products: cart.products};
         });
+        setOpen(false);
     };
 
     return <Card>

@@ -12,8 +12,10 @@ export default function useProducts(){
     const fetchProducts = async (signal, options= {pizzaVarieties: false}) => {
         const type = options.pizzaVarieties? "pizzaVarieties" : "ingredients";
         const result = await fetchHandler(`${origin}/products/${type}/`, signal);
-        if (result)
+        if (result){
             options.pizzaVarieties? setPizzaVarieties(result) : setIngredients(result);
+            return result;
+        }
     }
 
     return { fetchProducts, ingredients, pizzaVarieties, isLoading, error };
