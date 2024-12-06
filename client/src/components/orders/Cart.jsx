@@ -2,7 +2,6 @@ import { useContext } from "react";
 
 import { cartContext } from "../../contexts/CartContext";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
 
 /** Displays current cart */
 export default function Cart(){
@@ -10,7 +9,6 @@ export default function Cart(){
 
     return <Card>
         <CardHeader>
-            <Button>X</Button>
             <h1>Your selected items:</h1>
         </CardHeader>
         <CardContent>

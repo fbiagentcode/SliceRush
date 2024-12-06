@@ -12,11 +12,13 @@ export default function StockCounter({setQty}){
 
     const updateCount = (inc= true) => {
         const value = inc? 1 : -1;
-        setCount((prev) => prev + value);
+        // prevent negative qty
+        if (count + value < 0) return;
+        setCount((prev) => prev + value );
     }
 
     return <div>
-        <Button onClick= { () => updateCount(inc= false) }>-</Button>
+        <Button onClick= { () => updateCount(false) }>-</Button>
         <p>{count}</p>
         <Button onClick= { updateCount } >+</Button>
     </div>

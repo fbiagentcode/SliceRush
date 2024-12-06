@@ -1,26 +1,20 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import useFetch from "./useFetch";
 
 const origin = import.meta.env.VITE_ORIGIN;
 
 /** Fetch products hook */
-export default function useProducts(pizzaVarieties= false){
+export default function useProducts(){
     const { fetchHandler, isLoading, error } = useFetch();
-    const controller = useRef();
-    const [ products, setProducts ] = useState([]);
+    const [ ingredients, setIngredients ] = useState([]);
+    const [ pizzaVarieties, setPizzaVarieties ] = useState([]);
 
-    const fetchProducts = async () => {
-        const type = pizzaVarieties? "pizzaVarieties" : "ingredients";
-        const result = await fetchHandler(`${origin}/products/${type}/`, controller.current.signal);
-        if (result) setProducts(result);
+    const fetchProducts = async (signal, options= {pizzaVarieties: false}) => {
+        const type = options.pizzaVarieties? "pizzaVarieties" : "ingredients";
+        const result = await fetchHandler(`${origin}/products/${type}/`, signal);
+        if (result)
+            options.pizzaVarieties? setPizzaVarieties(result) : setIngredients(result);
     }
 
-    useEffect(() => {
-        controller.current = new AbortController();
-        fetchProducts();
-
-        return () => controller.current.abort();
-    }, []);
-
-    return { products, isLoading, error };
+    return { fetchProducts, ingredients, pizzaVarieties, isLoading, error };
 }

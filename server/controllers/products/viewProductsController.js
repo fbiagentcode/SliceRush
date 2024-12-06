@@ -1,7 +1,7 @@
 import pizzaVarieties from "../../models/pizzaVariety.js";
 import Ingredients from "../../models/ingredient.js";
 export async function viewIngredientsController(req, res){
-    const filter = {type: req.query.type};
+    const filter = {category: req.query.type};
     viewProducts(Ingredients, filter, req, res);
 }
 

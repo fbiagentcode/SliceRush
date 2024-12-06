@@ -17,10 +17,10 @@ export default function CustomPizzaCreator({products}){
     // filter products by category
     const filterProducts = (category) => products.filter((item) => item.category === category)
 
-    const cheeses = useMemo(filterProducts("cheese"), [products]);
-    const bases = useMemo(filterProducts("base"), [products]);
-    const sauces = useMemo(filterProducts("sauce"), [products]);
-    const veggies = useMemo(filterProducts("veggie"), [products]);
+    const cheeses = useMemo(() => filterProducts("cheese"), [products]);
+    const bases = useMemo(() => filterProducts("base"), [products]);
+    const sauces = useMemo(() => filterProducts("sauce"), [products]);
+    const veggies = useMemo(() => filterProducts("veggie"), [products]);
 
     const addVeggie = (newVeggie) => {
         // remove veggie if already selected
@@ -36,7 +36,7 @@ export default function CustomPizzaCreator({products}){
         if (!cheese) errors["cheese"] = ingredientErrorMsg("cheese");
         if (!sauce) errors["sauce"] = ingredientErrorMsg("sauce");
         if (!veggies.length) errors["veggies"] = ingredientErrorMsg("veggie");
-        if (!Object.keys(errors).length) return setError(errors);
+        if (Object.keys(errors).length) return setError(errors);
 
         setCart((cart) => {
             // update cart total
@@ -67,9 +67,6 @@ export default function CustomPizzaCreator({products}){
     };
 
     return <Card>
-        <CardHeader>
-            <h1>Customize your pizza!</h1>
-        </CardHeader>
         <CardContent>
             <p>Start by picking a base.</p>
             <ProductCarousel products= {bases} onItemClick= {(base) => setBase(base)}/>
