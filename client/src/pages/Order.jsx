@@ -44,7 +44,7 @@ export default function Order(){
                 <DialogTrigger asChild>
                     <Button>View Cart</Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className= "overflow-y-scroll max-h-screen">
                     <DialogHeader>
                         <DialogTitle>Cart</DialogTitle>
                     </DialogHeader>
@@ -56,7 +56,7 @@ export default function Order(){
                 <DialogTrigger asChild>
                     <Button>Order Now</Button>                
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className= "overflow-y-scroll max-h-screen">
                     <DialogHeader>
                         <DialogTitle>Confirm Order Details:</DialogTitle>
                     </DialogHeader>

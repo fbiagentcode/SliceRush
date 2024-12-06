@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 import { authContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
@@ -15,6 +15,7 @@ const origin = import.meta.env.VITE_ORIGIN;
 
 export default function Login(){
     const { dispatch } = useContext(authContext);
+    const navigate = useNavigate();
     const { fetchHandler, isLoading, error } = useFetch();
     const [ searchParams, setSearchParams ] = useSearchParams();
     const controller = useRef();
@@ -30,7 +31,10 @@ export default function Login(){
             }
         );
 
-        if (user) dispatch({type: "LOGIN", payload: user});
+        if (user) {
+            dispatch({type: "LOGIN", payload: user});
+            navigate("/order");
+        }
     };
 
     useEffect(() => {
