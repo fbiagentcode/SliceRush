@@ -1,43 +1,67 @@
 import mongoose from "mongoose";
+import Stripe from "stripe";
 import Orders from "../../models/order.js";
 import Ingredients from "../../models/ingredient.js";
 import Users from "../../models/user.js";
 import pizzaVarieties from "../../models/pizzaVariety.js";
 import sendMail from "../../utils/sendMail.js";
 
-const origin = "http://localhost:5173";
+const origin = process.env.VITE_ORIGIN;
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function placeOrderController(req, res, next){
     try{
-        const { body } = req;
-        const { products } = body;
+        const { user: auth, body } = req;
+        const { products, userId } = body;
         const productIds = products.map(({productId= "N/A"}) => productId);
+        const productsMap = new Map(products.map(item => [String(item.productId), item]));
         const lowStockItems = [];
+        const soldOutItems = [];
 
         // check if user placing order is valid
-        const user = await Users.findById(body.userId);
+        const user = await Users.findById(userId);
         if (!user) return next({err: "User does not exist.", code: 400});
 
+        if (userId !== auth._id) return next({err: "Not authorized to place order.", code: 401});
+
         // check if invalid/unavailable products are part of order
-        const ingredientsOrdered = await Ingredients.find({ 
-            _id: { $in: productIds },
-            isAvailable: true
-        });
         const pizzaVarietiesOrdered = await pizzaVarieties.find({ 
             _id: { $in: productIds },
             isAvailable: true
         });
+
+        // go through all pizzas' ingredients
+        pizzaVarietiesOrdered.forEach((pizza) => {
+            for (const ingredientId of pizza.ingredients){
+                const ingredient = productsMap.get(ingredientId);
+                const pizzaQty = productsMap.get(String(pizza._id)).qty;
+
+                // update ingredient stock
+                if (ingredient) return ingredient.qty += pizzaQty;
+                // add ingredient
+                productsMap.set(String(ingredientId), {productId: (ingredientId), qty: pizzaQty});
+                productIds.push(ingredientId);
+            }
+        });
+
+        const ingredientsOrdered = await Ingredients.find({ 
+            _id: { $in: productIds },
+            isAvailable: true
+        });
+
         const productsOrdered = ingredientsOrdered.concat(pizzaVarietiesOrdered);
 
         if(productsOrdered.length !== productIds.length) 
             return next({err: "Products which do not exist/are unavailable have been found in the order.", code: 400});
-        
+
         // do not place order if stock requirements not met
         ingredientsOrdered.forEach(ingredient => {
-            const product = products.find((product) => String(product.productId) === String(ingredient._id));
+            const product = productsMap.get(String(ingredient._id));
             // set actual stock for each product ordered to use later
             product["stock"] = ingredient?.stock?.amount - product.qty;
             
+            // add to sold out items list
+            if (!product.stock) soldOutItems.push(product.productId);
             // add ingredient to low stock list
             if (product.stock <= ingredient.stock?.threshold) lowStockItems.push({ingredient, newStock: product.stock});
             if (product.stock < 0){
@@ -58,8 +82,9 @@ export default async function placeOrderController(req, res, next){
         await user.save();
 
         // create bulk update stock queries
-        const writes = products.map(({ productId, qty, stock }) => {
-            return {
+        let writes = []
+        for (const [ productId, { qty, stock } ] of productsMap){
+            writes.push({
                 updateOne: {
                     filter: { _id: productId },
                     update: { 
@@ -67,10 +92,14 @@ export default async function placeOrderController(req, res, next){
                         $set: { isAvailable: Boolean(stock) }
                     }   
                 }
-            }
-        });
+            });
+        }
 
         await Ingredients.bulkWrite(writes, {session});
+        // update availability
+        await pizzaVarieties.updateMany({
+            ingredients: { $in: soldOutItems }
+        }, { isAvailable: false });
 
         await session.commitTransaction();
         await session.endSession();
