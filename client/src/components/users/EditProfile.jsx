@@ -21,20 +21,31 @@ export default function EditProfile({user}){
     const [ image, setImage ] = useState(null);
     const [ imageUrl, setImageUrl ] = useState(user.imageUrl);
 
+    useEffect(() => {
+        if (email || name || image) return setChangesMade(true);
+        setChangesMade(false);
+    }, [email, name, image])
+
     const saveChanges = async () => {
+        if (!changesMade) return;
+
         // reset success state
         setSuccess(false);
 
         const form = new FormData();
         const formProps = new Map(Object.entries({email, name, image}));
+        
         // flag for form empty
         let isEmpty = true;
 
         // add fields to form
         for (const [ field, value ] of formProps){
-            if (value) form.append(field, value);
-            isEmpty = false;
+            if (value) {
+                form.append(field, value);
+                isEmpty = false;
+            }
         }
+
         // if form is empty do not update
         if (isEmpty) return setChangesMade(false);
 

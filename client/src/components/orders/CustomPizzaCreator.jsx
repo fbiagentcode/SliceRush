@@ -35,7 +35,7 @@ export default function CustomPizzaCreator({products, setOpen}){
         if (!base) errors["base"] = ingredientErrorMsg("base");
         if (!cheese) errors["cheese"] = ingredientErrorMsg("cheese");
         if (!sauce) errors["sauce"] = ingredientErrorMsg("sauce");
-        if (!veggies.length) errors["veggies"] = ingredientErrorMsg("veggie");
+        if (!veggiesAdded.length) errors["veggies"] = ingredientErrorMsg("veggie");
         if (Object.keys(errors).length) return setError(errors);
 
         setCart((cart) => {
@@ -43,11 +43,11 @@ export default function CustomPizzaCreator({products, setOpen}){
             cart.amount = cheese.price?.amount + 
             sauce.price?.amount + 
             base.price?.amount + 
-            veggies.reduce((sum, {price: {amount}}) => sum + amount, cart.amount);
+            veggiesAdded.reduce((sum, {price: {amount}}) => sum + amount, cart.amount);
             
             const cartItems = new Map(cart.products.map((product) => [product._id, product]));
 
-            const pizzaIngredients = [cheese, base, sauce, ...veggies];
+            const pizzaIngredients = [cheese, base, sauce, ...veggiesAdded];
             
             pizzaIngredients.forEach(({_id, name}) => {
                 // update stock if ingredient already in cart

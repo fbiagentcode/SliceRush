@@ -5,6 +5,8 @@ import Users from "../../models/user.js";
 import pizzaVarieties from "../../models/pizzaVariety.js";
 import sendMail from "../../utils/sendMail.js";
 
+const origin = "http://localhost:5173";
+
 export default async function placeOrderController(req, res, next){
     try{
         const { body } = req;
@@ -76,18 +78,20 @@ export default async function placeOrderController(req, res, next){
         // send email alerts to admin on low stock items
         const lowStockCount = lowStockItems.length;
         if (lowStockCount){
+            // setup mail headers
             const mail = { 
                 subject: `Alert: ${lowStockCount} INGREDIENTS ON LOW STOCK`,
                 to: process.env.ADMIN_USER + "@inbox.mailtrap.io" 
             };
             // create body for mail
+            const link = `${origin}/dashboard`;
             mail.content = "<h1>These ingredients require restocking ASAP: </h1>" + "<ul>"
             lowStockItems.forEach(({ingredient, newStock}) => {
                 return (
                     mail.content += `<li>${ingredient.name} - Stock: ${ingredient.stock?.amount - newStock}</li>`
                 );
             });
-            mail.content += "</ul><p>Restock now at the dashboard: <a href= link</a></p>";
+            mail.content += `</ul><p>Restock now at the dashboard: <a href= ${link}</a></p>`;
             await sendMail(mail);
         }
 

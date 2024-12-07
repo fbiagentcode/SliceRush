@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 import { authContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
-import Error from "../../pages/Error";
 import Profile from "./Profile";
 import OrdersTable from "@/components/orders/OrdersTable";
 
@@ -26,17 +25,20 @@ export default function UserDashboard(){
     };
 
     useEffect(() => {
-        controllers.current = [new AbortController, new AbortController];
+        controllers.current = Array.from({ length: 2 }, () => new AbortController());
 
-        return () => controllers.current.forEach((signal => signal.abort()));
+        return () => controllers.current.forEach((signal => {
+            signal.abort();
+        }));
     }, []);
 
     useEffect(() => {
-        if (!auth) return setError({code: 401});
+        if (!auth) return;
         getUserDetails();
     }, [auth]);
 
-    return error? <Error code= {error.code} /> : <div>
+    return <div>
+        { error && <p>{error.errors}</p> }
         <OrdersTable orders= {orders} />
         <Profile user= {user} />
     </div>
