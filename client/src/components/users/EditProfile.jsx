@@ -13,7 +13,7 @@ const origin = import.meta.env.VITE_ORIGIN;
 export default function EditProfile({user}){
     const { fetchHandler, isLoading, error } = useFetch();
     const controller = useRef();
-    const { dispatch } = useContext(authContext);
+    const { user: auth, dispatch } = useContext(authContext);
     const [ changesMade, setChangesMade ] = useState(false);
     const [ success, setSuccess ] = useState(false);
     const [ email, setEmail ] = useState("");
@@ -24,18 +24,24 @@ export default function EditProfile({user}){
     const saveChanges = async () => {
         const form = new FormData();
         const formProps = new Map(Object.entries({email, name, image}));
+        // flag for form empty
+        let isEmpty = true;
+
         // add fields to form
-        for (const [ field, value ] of formProps) 
+        for (const [ field, value ] of formProps){
             if (value) form.append(field, value);
+            isEmpty = false;
+        }
         // if form is empty do not update
-        if (form.entries().next().done) return setChangesMade(false);
+        if (isEmpty) return setChangesMade(false);
 
         // update user
         const result = await fetchHandler(`${origin}/users/${user._id}`, controller.current.signal,
         {
             method: "PUT",
-            body: form
+            body: form,
         });
+        console.log(result);
 
         // update user context details and set success
         if (result) {
@@ -45,15 +51,16 @@ export default function EditProfile({user}){
         }
     };
 
+    // update img preview
     useEffect(() => {
         let url;
         if (image){
             url = URL.createObjectURL(image);
         }
-        setImageUrl(url || user.imageUrl);
+        setImageUrl(url || auth?.imageUrl);
 
         return () => URL.revokeObjectURL(url);
-    }, [authContext, image])
+    }, [auth, image])
 
     useEffect(() => {
         controller.current = new AbortController();
@@ -65,7 +72,7 @@ export default function EditProfile({user}){
         <DialogTrigger asChild>
             <Button>Edit Profile</Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className= "overflow-y-scroll max-h-screen">
             <DialogHeader>
                 <DialogTitle>Edit your profile</DialogTitle>
                 <DialogDescription>
@@ -74,7 +81,7 @@ export default function EditProfile({user}){
                 { success && <p>Changes saved.</p> }
             </DialogHeader>
             <div>
-                { imageUrl && <img src= {imageUrl} alt= {`${user.name}'s avatar`} /> }
+                { imageUrl && <img src= {imageUrl} alt= {`${user.name}'s avatar`} crossOrigin= "anonymous"/> }
                 <FileInput setImage= {setImage} />
                 <InputWithLabel 
                     type="text"

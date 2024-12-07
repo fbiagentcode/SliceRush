@@ -31,12 +31,16 @@ export default async function updateUserByIdController(req, res, next){
                 
                 const { data, error } = uploadResult;
 
+                // if image upload/update fails respond with error
                 if (error) return next({err: error, code: 1*error.statusCode});
                 
                 const { data: {publicUrl} } = bucket.getPublicUrl(data.path);
                 update.imageUrl = publicUrl;
             }
-            const updatedUser = await Users.findByIdAndUpdate(id, update, { new: true });
+            const updatedUser = await Users.findByIdAndUpdate(id, update, { 
+                projection: {password: 0}, 
+                returnDocument: "after" 
+            });
             res.json(updatedUser);
             return console.log("Updated user details", updatedUser);
         }

@@ -42,7 +42,7 @@ async function updateProductController(productType, id, update, req, res, next){
             update.imageUrl = publicUrl;
         }
         // update product
-        const updatedProduct = await productType.findByIdAndUpdate(id, update, { new: true });
+        const updatedProduct = await productType.findByIdAndUpdate(id, update, { returnDocument: "after" });
         res.json(updatedProduct);
         console.log("Updated a product:", updatedProduct);
     }
