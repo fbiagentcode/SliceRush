@@ -22,6 +22,9 @@ export default function EditProfile({user}){
     const [ imageUrl, setImageUrl ] = useState(user.imageUrl);
 
     const saveChanges = async () => {
+        // reset success state
+        setSuccess(false);
+
         const form = new FormData();
         const formProps = new Map(Object.entries({email, name, image}));
         // flag for form empty
@@ -78,7 +81,7 @@ export default function EditProfile({user}){
                 <DialogDescription>
                     Make changes to your profile here. Click <i>Save</i> when done. 
                 </DialogDescription>
-                { success && <p>Changes saved.</p> }
+                { success && <p>Changes saved. Image updates may take a while to show up.</p> }
             </DialogHeader>
             <div>
                 { imageUrl && <img src= {imageUrl} alt= {`${user.name}'s avatar`} crossOrigin= "anonymous"/> }

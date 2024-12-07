@@ -43,7 +43,7 @@ export default function CustomPizzaCreator({products, setOpen}){
             cart.amount = cheese.price?.amount + 
             sauce.price?.amount + 
             base.price?.amount + 
-            veggies.reduce((sum, {price: {amount}}) => sum + amount, 0);
+            veggies.reduce((sum, {price: {amount}}) => sum + amount, cart.amount);
             
             const cartItems = new Map(cart.products.map((product) => [product._id, product]));
 
@@ -91,4 +91,5 @@ export default function CustomPizzaCreator({products, setOpen}){
     </Card>
 }
 
+// display msg if ingredient not selected
 const ingredientErrorMsg = (type) => `Please select a ${type}.`;

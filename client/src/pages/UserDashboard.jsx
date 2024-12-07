@@ -37,7 +37,7 @@ export default function UserDashboard(){
     }, [auth]);
 
     return error? <Error code= {error.code} /> : <div>
-        <OrdersTable orders= {orders} setOrders={setOrders} />
+        <OrdersTable orders= {orders} />
         <Profile user= {user} />
     </div>
 }

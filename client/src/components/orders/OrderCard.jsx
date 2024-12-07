@@ -52,6 +52,7 @@ export default function OrderCard({order, setOrders}){
                     </VisuallyHidden.Root>
                     { user.role === "admin" && <OrderStatusSetter
                         setStatus= {setStatus} 
+                        status= {status}
                         saveChanges= {updateOrder}
                         isLoading= {isLoading}
                         error= {error}
@@ -72,10 +73,10 @@ export default function OrderCard({order, setOrders}){
 }
 
 const statuses = ["received", "kitchen", "dispatched"];
-function OrderStatusSetter({setStatus, saveChanges, changesMade, error, isLoading}){
+function OrderStatusSetter({setStatus, status, saveChanges, changesMade, error, isLoading}){
     return <div>
-        { statuses.map((status, i) => (
-            <Button key= {i} onClick= { () => setStatus(status) }>{status}</Button>
+        { statuses.map((statusOption, i) => (
+            <Button key= {i} onClick= { () => setStatus(statusOption) }>{statusOption}</Button>
         )) }
         { error?.errors && <p>{error?.errors}</p> }
         { isLoading? <ButtonLoading/> : <Button onClick= {saveChanges}>Save Changes</Button> }
