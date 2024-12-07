@@ -18,5 +18,5 @@ export default function useProducts(){
         }
     }
 
-    return { fetchProducts, ingredients, pizzaVarieties, isLoading, error };
+    return { fetchProducts, ingredients, setIngredients, pizzaVarieties, isLoading, error };
 }

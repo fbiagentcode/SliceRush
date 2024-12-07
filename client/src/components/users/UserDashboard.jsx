@@ -1,9 +1,9 @@
 import { useContext, useEffect, useRef, useState } from "react";
 
-import { authContext } from "../contexts/AuthContext";
-import useFetch from "../hooks/useFetch";
-import Error from "./Error";
-import Profile from "../components/users/Profile";
+import { authContext } from "../../contexts/AuthContext";
+import useFetch from "../../hooks/useFetch";
+import Error from "../../pages/Error";
+import Profile from "./Profile";
 import OrdersTable from "@/components/orders/OrdersTable";
 
 
@@ -22,7 +22,7 @@ export default function UserDashboard(){
         const getOrders = fetchHandler(`${origin}/orders?userId=${auth._id}`, controllers.current[1].signal);
         const results = await Promise.all([getUser, getOrders]);
         setUser(results[0]);
-        setOrders(results[1]);
+        setOrders(results[1]?.slice().reverse());
     };
 
     useEffect(() => {
