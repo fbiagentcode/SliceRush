@@ -7,8 +7,8 @@ export default function AuthContextProvider({children}){
     useEffect(() => {
         if (!user){
             // get user details from local storage
-            const userStorage = localStorage.getItem("auth");
-            if(user) dispatch({type: "LOGIN", payload: JSON.parse(userStorage)});
+            const userStorage = localStorage.getItem("user");
+            if(userStorage) dispatch({type: "LOGIN", payload: JSON.parse(userStorage)});
         }
     }, [])
 

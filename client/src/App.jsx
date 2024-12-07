@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import AuthContextProvider from "./contexts/AuthContext.jsx";
 import CartContextProvider from "./contexts/CartContext.jsx";
-import Error from "./pages/Error.jsx";
+import UserDashboard from "./pages/UserDashboard.jsx";
 import Login from "./components/auth/Login.jsx";
 import EditProfile from "./components/users/EditProfile.jsx";
 import Order from "./pages/Order.jsx";
@@ -16,7 +16,7 @@ function App() {
             <Route path="/" element= { <Login/> } />
             <Route path="/order" element= { <Order/> } />
             <Route path="/user/" element= { <EditProfile/> } />
-            <Route path="/error" element= { <Error/> } />
+            <Route path="/dashboard" element= { <UserDashboard/> } />
         </Routes>
       </CartContextProvider>
     </AuthContextProvider>

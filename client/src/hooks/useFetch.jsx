@@ -14,7 +14,7 @@ export default function useFetch(){
                 return result;
             }
             // set error response
-            setError(result);
+            setError({...result, code: response.status});
         }catch(err){
             setError({err});
         }

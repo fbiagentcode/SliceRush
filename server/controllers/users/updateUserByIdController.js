@@ -19,10 +19,18 @@ export default async function updateUserByIdController(req, res, next){
                 const bucketId = "images";
                 const bucket = supabaseClient.storage.from(bucketId);
                 const oldPath = existingUser.imageUrl?.split(bucketId + "/")[1];
-
-                // replace img
-                const { data, error } = await bucket.update(oldPath, file.buffer, { upsert: true });
+                let uploadResult;
                 
+                // upload img without replacing default icon in storage
+                if (oldPath === `users/userIconShadow.jpg`){
+                    const newPath = `users/${file.originalname}`;
+                    uploadResult = await bucket.upload(newPath, file.buffer, file.mimetype);
+                }
+                // replace img
+                else uploadResult = await bucket.update(oldPath, file.buffer, { upsert: true });
+                
+                const { data, error } = uploadResult;
+
                 if (error) return next({err: error, code: 1*error.statusCode});
                 
                 const { data: {publicUrl} } = bucket.getPublicUrl(data.path);

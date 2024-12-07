@@ -1,20 +1,20 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import { authContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
 import InputWithLabel from "../ui/InputWithLabel";
 import FileInput from "../ui/FileInput";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import ButtonLoading from "../ui/ButtonLoading";
 
-const origin = import.meta.vite.VITE_ORIGIN;
+const origin = import.meta.env.VITE_ORIGIN;
 
 export default function EditProfile({user}){
     const { fetchHandler, isLoading, error } = useFetch();
     const controller = useRef();
     const { dispatch } = useContext(authContext);
-    const [ changesExist, setChangesExist ] = useState(false);
+    const [ changesMade, setChangesMade ] = useState(false);
     const [ success, setSuccess ] = useState(false);
     const [ email, setEmail ] = useState("");
     const [ name, setName ] = useState("");    
@@ -23,12 +23,12 @@ export default function EditProfile({user}){
 
     const saveChanges = async () => {
         const form = new FormData();
-        const formProps = new Map({email, name, image});
+        const formProps = new Map(Object.entries({email, name, image}));
         // add fields to form
         for (const [ field, value ] of formProps) 
             if (value) form.append(field, value);
         // if form is empty do not update
-        if (form.entries().next().done) return setChangesExist(false);
+        if (form.entries().next().done) return setChangesMade(false);
 
         // update user
         const result = await fetchHandler(`${origin}/users/${user._id}`, controller.current.signal,
@@ -37,11 +37,23 @@ export default function EditProfile({user}){
             body: form
         });
 
+        // update user context details and set success
         if (result) {
             setSuccess(true);
             dispatch({type: "UPDATE", payload: result});
+            setChangesMade(false);
         }
     };
+
+    useEffect(() => {
+        let url;
+        if (image){
+            url = URL.createObjectURL(image);
+        }
+        setImageUrl(url || user.imageUrl);
+
+        return () => URL.revokeObjectURL(url);
+    }, [authContext, image])
 
     useEffect(() => {
         controller.current = new AbortController();
@@ -56,6 +68,10 @@ export default function EditProfile({user}){
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Edit your profile</DialogTitle>
+                <DialogDescription>
+                    Make changes to your profile here. Click <i>Save</i> when done. 
+                </DialogDescription>
+                { success && <p>Changes saved.</p> }
             </DialogHeader>
             <div>
                 { imageUrl && <img src= {imageUrl} alt= {`${user.name}'s avatar`} /> }
@@ -73,10 +89,12 @@ export default function EditProfile({user}){
                     fieldValue= {email} 
                     setField= {setEmail}
                 />
+                { error?.errors?.email && <p>{error.errors?.email}</p> }
             </div>
             <DialogFooter>
                 { isLoading? <ButtonLoading /> : 
                 <Button onClick= {saveChanges}>Save</Button> }
+                { error?.errors && !error?.errors?.email && <p>{error.errors}</p> }
             </DialogFooter>
         </DialogContent>
     </Dialog>

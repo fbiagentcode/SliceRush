@@ -34,11 +34,8 @@ export default function Order(){
         return () => controller.current.abort();
     }, []);
 
-    useEffect(() => {
-        if (error) navigate("/error");
-    }, [error])
     
-    return <>
+    return error? <Error code= {error.code}/> : (<>
         <div>
             <Dialog>
                 <DialogTrigger asChild>
@@ -78,6 +75,6 @@ export default function Order(){
             </Dialog>
             <p>Or, pick from the many delicious pizzas available</p>
             <PizzaVarieties products= {pizzaVarieties} />
-        </div>
-    </>
+        </div> 
+    </>)
 }
