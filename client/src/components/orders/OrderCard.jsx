@@ -17,12 +17,16 @@ export default function OrderCard({order, setOrders}){
     const [ status, setStatus ] = useState(order.status);
     const [ changesMade, setChangesMade ] = useState(false);
 
-    // update order details
+    // update order status
     const updateOrder = async () => {
+        // do not send request if status is unchanged
+        if (status === order.status) return;
+        // update status
         const result = await fetchHandler(`${origin}/orders/${order._id}`, controller.current.signal,
         {
             method: "PUT",
-            body: JSON.stringify({status})
+            body: JSON.stringify({status}),
+            headers: { "Content-Type": "application/json" }
         });
         if (result){
             setStatus(result.status);
@@ -51,12 +55,10 @@ export default function OrderCard({order, setOrders}){
                         <DialogDescription>Order details are listed below.</DialogDescription>
                     </VisuallyHidden.Root>
                     { user.role === "admin" && <OrderStatusSetter
-                        setStatus= {setStatus} 
-                        status= {status}
-                        saveChanges= {updateOrder}
+                        status= { {status, setStatus} }
+                        changes= { {changesMade, setChangesMade, saveChanges: updateOrder} }
                         isLoading= {isLoading}
                         error= {error}
-                        changesMade= {changesMade}
                     /> }
                 </DialogHeader>
                 <Table>
@@ -73,12 +75,21 @@ export default function OrderCard({order, setOrders}){
 }
 
 const statuses = ["received", "kitchen", "dispatched"];
-function OrderStatusSetter({setStatus, status, saveChanges, changesMade, error, isLoading}){
+function OrderStatusSetter({status: {setStatus, status}, changes: {saveChanges, changesMade, setChangesMade}, error, isLoading}){
+    const updateStatus = (option) => {
+        if (status === option) {
+            setChangesMade(false);
+            setStatus(null);
+        }
+        setStatus(option);
+        setChangesMade(true);
+    };
+    
     return <div>
-        { statuses.map((statusOption, i) => (
-            <Button key= {i} onClick= { () => setStatus(statusOption) }>{statusOption}</Button>
+        { statuses.map((option, i) => (
+            <Button key= {i} onClick= { () => updateStatus(option) }>{option}</Button>
         )) }
         { error?.errors && <p>{error?.errors}</p> }
-        { isLoading? <ButtonLoading/> : <Button onClick= {saveChanges}>Save Changes</Button> }
+        { changesMade && (isLoading? <ButtonLoading/> : <Button onClick= {saveChanges}>Save Changes</Button>) }
     </div>
 }

@@ -12,11 +12,12 @@ export default function StockCounter({setQty, product}){
         setQty(count, product);
     }, [count])
 
-    // reset counter
+    // reset counter depending on context
     useEffect(() => {
         if (resetCounters?.reset) setCount(0)
     }, [resetCounters]);
 
+    // update counter
     const updateCount = (inc= true) => {
         const value = inc? 1 : -1;
         // prevent negative qty
