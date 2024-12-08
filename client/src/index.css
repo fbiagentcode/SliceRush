@@ -1,6 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face{
+  font-family: "aeonik";
+  src: url("../public/fonts/AeonikTRIAL-Regular.otf")
+}
+
+@font-face{
+  font-family: "aeonik-bold";
+  src: url("../public/fonts/AeonikTRIAL-Bold.otf")
+}
+
+@font-face{
+  font-family: "aeonik-lt";
+  src: url("../public/fonts/AeonikTRIAL-Light.otf")
+}
+
+@font-face{
+  font-family: "helvetica";
+  src: url("../public/fonts/HELVETICA\ NEU\ BOLD.TTF")
+}
+
+@font-face{
+  font-family: "neue";
+  src: url("../public/fonts/helveticaneue-roman.otf")
+}
+
+@font-face{
+  font-family: "helvetica-ex";
+  src: url("../public/fonts/Helvetica\ Neue\ LT\ Std\ 83\ Heavy\ Extended.otf")
+}
+
+@font-face{
+  font-family: "inter";
+  src: url("../public/fonts/Inter_28pt-Regular.ttf")
+}
+
+@font-face{
+  font-family: "inter-semi-bold";
+  src: url("../public/fonts/Inter_24pt-SemiBold.ttf")
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -61,6 +102,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }

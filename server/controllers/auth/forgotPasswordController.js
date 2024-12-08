@@ -11,7 +11,7 @@ export default function forgotPasswordController(req, res, next){
         // get token
         const token = genToken({email});
     
-        const link = `${origin}/reset-password/?token=${token}`;
+        const link = `${origin}/auth/reset-password?token=${token}`;
         const mail = {
             to: email,
             subject: "Slice Rush - Confirm password reset",

@@ -10,6 +10,8 @@ export default function AuthContextProvider({children}){
             const userStorage = localStorage.getItem("user");
             if(userStorage) dispatch({type: "LOGIN", payload: JSON.parse(userStorage)});
         }
+
+        return () => console.log("auth unmount");
     }, [])
 
     // test effect

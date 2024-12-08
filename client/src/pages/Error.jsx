@@ -12,9 +12,9 @@ const errors = {
         msg: "Uh oh, something went wrong. Please try again later."
     }
 }
-export default function Error({code= 500}){
+export default function Error({code= 500, msg}){
     return <div>
         <h1>{errors[code].status}</h1>
-        <p>{errors[code].msg}</p>
+        <p>{msg || errors[code].msg}</p>
     </div>
 }

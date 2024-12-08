@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { authContext } from "../contexts/AuthContext.jsx";
+
 export default function useFetch(){
+    const { dispatch } = useContext(authContext);
     const [ error, setError ] = useState(null);
     const [ isLoading, setIsLoading ] = useState(false);
 
@@ -13,6 +16,12 @@ export default function useFetch(){
             if (response.ok){
                 return result;
             }
+            
+            // remove local storage user details if invalid token
+            if (result.errors.includes("token")) {
+                dispatch({type: "LOGOUT"});
+            }
+            
             // set error response
             setError({...result, code: response.status});
         }catch(err){

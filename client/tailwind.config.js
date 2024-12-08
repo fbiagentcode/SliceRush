@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+import { fontFamily } from "tailwindcss/defaultTheme";
+
 export default {
     darkMode: ['class'],
     content: [
@@ -9,12 +12,22 @@ export default {
     ],
     theme: {
     	extend: {
+			fontFamily: {
+				aeonik: ["aeonik", "sans-serif"],
+				"aeonik-bold": ["aeonik-bold"],
+				"aeonik-lt": "aeonik-lt",
+				helvetica: "helvetica",
+				"helvetica-ex": "helvetica-ex",
+				sans: ["inter", ...fontFamily.sans]
+			},
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
     			sm: 'calc(var(--radius) - 4px)'
     		},
     		colors: {
+				'grey': { 10: "#b2ada9", 50: "#a5a19e", 100: "#282421", 500: "#49413e" },
+				'black': { 50: "#080607" },
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
     			card: {

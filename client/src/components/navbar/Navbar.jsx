@@ -39,6 +39,9 @@ export default function Navbar(){
     return <NavigationMenu>
         <NavigationMenuList>
             <NavigationMenuItem>
+                Slice Rush
+            </NavigationMenuItem>
+            <NavigationMenuItem>
                 <NavLink to= "/">Home</NavLink>
             </NavigationMenuItem>
             { user? <>

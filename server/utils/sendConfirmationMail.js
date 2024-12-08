@@ -13,7 +13,7 @@ export default function sendConfirmationMail(user){
 
     console.log(jwt.decode(auth));
     
-    const link = `${process.env.ORIGIN}/auth/confirmation?token=${auth}`;
+    const link = `${process.env.VITE_ORIGIN}/auth/verify/?token=${auth}`;
     const mail = {
         to: user.email,
         subject: "Confirm your Slice Rush account registration",

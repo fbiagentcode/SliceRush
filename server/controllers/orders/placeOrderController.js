@@ -56,7 +56,7 @@ export default async function placeOrderController(req, res, next){
             // go through all pizzas' ingredients
             pizzaVarietiesOrdered.forEach((pizza) => {
                 for (const ingredientId of pizza.ingredients){
-                    const ingredient = productsMap.get(ingredientId);
+                    const ingredient = productsMap.get(String(ingredientId));
                     const pizzaQty = productsMap.get(String(pizza._id)).qty;
     
                     // update ingredient stock

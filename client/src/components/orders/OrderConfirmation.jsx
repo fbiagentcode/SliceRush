@@ -15,7 +15,6 @@ export default function OrderConfirmation(){
     const { cart } = useContext(cartContext);
     const controller = useRef();
     const [ destination, setDestination ] = useState("");
-    const [ success, setSuccess ] = useState(false);
 
     // open payment portal after server sets up session
     const handlePayment = async () => {
@@ -48,7 +47,6 @@ export default function OrderConfirmation(){
     }, []);
 
     return <div>
-        { success && <p>SUCCESS! PIZA YAY</p> }
         <Cart/>
         <InputWithLabel 
             fieldName= "Destination Address:"

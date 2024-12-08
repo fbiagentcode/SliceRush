@@ -11,11 +11,15 @@ export default async function resetPasswordController(req, res, next){
        
         // reset password
         const { email } = user;
-        if(await Users.findOneAndUpdate({email}, {password}))
+        const updatedUser = await Users.findOneAndUpdate({email}, {password});
+        if (updatedUser){
+            console.log(`${updatedUser.name} reset password successfully.`);
+
             return res.json({
                 success: true, 
                 message: "Your password has been successfully reset. You can now log in with your new password."
             });
+        }
         next({err: "Account with that email does not exist. Create a new account.", code: 400});
     }
     catch(err){

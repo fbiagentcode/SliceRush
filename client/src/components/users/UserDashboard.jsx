@@ -1,7 +1,9 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { authContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
+import Error from "../../pages/Error";
 import Profile from "./Profile";
 import OrdersTable from "@/components/orders/OrdersTable";
 
@@ -12,6 +14,7 @@ export default function UserDashboard(){
     const { fetchHandler, isLoading, error, setError } = useFetch();
     const controllers = useRef([]);
     const { user: auth } = useContext(authContext);
+    const navigate = useNavigate();
     const [ user, setUser ] = useState({});
     const [ orders, setOrders ] = useState([]);
 
@@ -33,13 +36,15 @@ export default function UserDashboard(){
     }, []);
 
     useEffect(() => {
-        if (!auth) return;
+        if (!auth) return setError({code: 401});
         getUserDetails();
     }, [auth]);
 
-    return <div>
-        { error && <p>{error.errors}</p> }
-        <OrdersTable orders= {orders} />
-        <Profile user= {user} />
-    </div>
+    return (<div>
+        { error? <Error code= {error.code} /> : 
+        <>
+            <OrdersTable orders= {orders} />
+            <Profile user= {user} />
+        </> }
+    </div>)
 }

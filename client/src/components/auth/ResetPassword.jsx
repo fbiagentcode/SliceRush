@@ -20,6 +20,7 @@ export default function ResetPassword(){
 
     const resetPassword = async () => {
         // confirm passwords entered match 
+        if (!password || !confirmPassword) return setError({errors: "Password and confirmed password required."});
         if (password !== confirmPassword) return setError({errors: "Passwords do not match."});
 
         const result = await fetchHandler(`${origin}/auth/reset-password?token=${searchParams.get("token")}`, controller.current.signal,
