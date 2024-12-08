@@ -11,7 +11,7 @@ const PIZZA_VARIETY_SCHEMA = new mongoose.Schema({
     },
 	description: { type: String, required: true },
 	imageUrl: { type: String },
-	total: {
+	price: {
         amount: { type: Number, required: true },
         currency: {
             type: String,

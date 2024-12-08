@@ -26,7 +26,7 @@ const ORDER_SCHEMA = new mongoose.Schema({
 		qty: { type: Number, required: true }
     }],
 	status: { type: String, enum: ["received", "kitchen", "dispatched"], default: "received" },
-    paymentStatus: { type: String, enum: ["pending", "completed", "failed"], default: "pending" }
+    // paymentStatus: { type: String, enum: ["pending", "completed", "failed"], default: "pending" }
 });
 
 export default mongoose.model("Order", ORDER_SCHEMA);

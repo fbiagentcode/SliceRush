@@ -12,5 +12,5 @@ export async function viewPizzaVarietiesController(req, res){
 async function viewProducts(productType, filter, req, res){
     const products = await productType.find(filter);
     res.json(products);
-    console.log(products);
+   // console.log(products);
 }

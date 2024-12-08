@@ -12,15 +12,19 @@ export default function PizzaVarieties({products}){
 }
 
 /** Counter to update pizza variety qty in cart */
-function PizzaVarietyCounter({ product: {_id, name} }){
+function PizzaVarietyCounter({ product: {_id, name, ...other} }){
     const { setCart } = useContext(cartContext);
 
     const setQty = (count) => {
         setCart(cart => {
             const product = cart.products?.find((product) => product._id === _id);
+            
+            // add price of pizza to total
+            if (count) cart.amount += other.price?.amount;
+
             // add item to cart
             if (!product && count){
-                cart.products?.push({_id, name, qty: count});
+                cart.products?.push({_id, name, qty: count, ...other});
                 return {...cart};
             }
             // remove from cart qty stock reduced to 0
