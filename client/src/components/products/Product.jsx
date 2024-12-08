@@ -2,15 +2,15 @@ import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 
 /** A card component for a product */
 export default function Product({product: {name, description, imageUrl, stock}, onClick, displayStock= false, children}){
-    return <Card onClick= {onClick} className= "bg-gradient-to-r from-grey-500  via-grey-100 to-black-50 rounded-lg shadow-lg max-w-sm p-6 text-white">
+    return <Card onClick= {onClick} className= "flex flex-col justify-stretch bg-gradient-to-r from-grey-500  via-grey-100 to-black-50 rounded-2xl shadow-lg max-w-sm p-6 text-white">
         <CardHeader className= "">
-            <h1 className="text-xl tracking-tight">{name}</h1>
+            <h1 className= "text-xl tracking-tight">{name}</h1>
         </CardHeader>
-        <CardContent className="overflow-hidden rounded-lg">
-            <p className="mb-4 text-grey-10">{description}</p>
-            <img src= {imageUrl} alt= {name} className= "w-full object-cover "/>
+        <CardContent className= "flex flex-col justify-end overflow-hidden rounded-lg grow">
+            <p className= "mb-4 text-grey-10">{description}</p>
+            <img src= {imageUrl} alt= {name} className= "w-full "/>            
         </CardContent>
-        <CardFooter className="p-4 border-gray-700">
+        <CardFooter className= "p-4 border-grey flex flex-col items-center">
             { displayStock && <ProductStockDetails stock= {stock} /> }
             {children}
         </CardFooter>
@@ -18,13 +18,13 @@ export default function Product({product: {name, description, imageUrl, stock}, 
 }
 
 function ProductStockDetails({stock}){
-    return (<div className="grid grid-cols-2 gap-4 text-sm text-gray-400">
-        <div>
-            <p className="font-medium text-grey-10">Current stock: </p>
+    return (<div className= "flex flex-col justify-center gap-1 mb-4 text-sm text-grey-10">
+        <div className= "grid grid-cols-2 place-items-center">
+            <p className= "font-medium text-grey-50">Current stock: </p>
             <p>{stock.amount}</p>
         </div>
-        <div>
-            <p className="font-medium text-grey-10">Threshold: </p>
+        <div className= "grid grid-cols-2 place-items-center">
+            <p className= "font-medium text-grey-50">Threshold: </p>
             <p>{stock.threshold}</p>
         </div>
     </div>);

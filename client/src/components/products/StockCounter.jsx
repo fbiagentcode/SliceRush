@@ -25,7 +25,7 @@ export default function StockCounter({setQty, product}){
         setCount((prev) => prev + value );
     }
 
-    return <div>
+    return <div className= "flex flex-row items-center gap-x-4 font-aeonik-bold">
         <Button onClick= { () => updateCount(false) }>-</Button>
         <p>{count}</p>
         <Button onClick= { updateCount } >+</Button>
