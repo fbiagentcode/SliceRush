@@ -94,29 +94,29 @@ export default function ProductStockManager({products, setProducts}){
     const sauces = useMemo(() => filterProducts("sauce"), [products]);
     const veggies = useMemo(() => filterProducts("veggie"), [products]);
 
-    return (<Card>
-        <CardHeader>
+    return (<Card className= "bg-grey-900 text-grey-50 border-none">
+        <CardHeader className= "flex flex-col items-center gap-y-4 ">
             { error && <p>{error.errors}</p> }
             { success && <p>Changes saved successfully.</p> }
             { changesMade && (isLoading? <ButtonLoading/> : 
-            <Button onClick= {saveChanges}>Save</Button>) }
+            <Button className= "text-xl py-7 px-20" onClick= {saveChanges}>Save</Button>) }
         </CardHeader>
-        <CardContent>
+        <CardContent className= "text-white-50">
             { lowStockItems[0] && <>
-                <h2>LOW STOCK ITEMS</h2>
-                <p>These items need urgent restocking.</p>
+                <h2 className= "text-white text-lg p-4">LOW STOCK ITEMS</h2>
+                <p className= "p-4">These items need urgent restocking.</p>
                 <ProductCarousel products= {lowStockItems} onStockChange= {updateStock} displayStock= {true}/> 
             </> }
-            <h2>Cheeses</h2>
+            <h2 className= "text-white text-lg mt-4 p-4">Cheeses</h2>
             <ProductCarousel products= {cheeses} onStockChange= {updateStock} displayStock= {true}/>
 
-            <h2>Bases</h2>
+            <h2 className= "text-white text-lg mt-4 p-4">Bases</h2>
             <ProductCarousel products= {bases} onStockChange= {updateStock} displayStock= {true}/>
 
-            <h2>Sauces</h2>
+            <h2 className= "text-white text-lg mt-4 p-4">Sauces</h2>
             <ProductCarousel products= {sauces} onStockChange= {updateStock} displayStock= {true}/>
 
-            <h2>Veggies</h2>
+            <h2 className= "text-white text-lg mt-4 p-4">Veggies</h2>
             <ProductCarousel products= {veggies} onStockChange= {updateStock} displayStock= {true}/>
         </CardContent>
     </Card>);

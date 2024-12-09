@@ -50,7 +50,7 @@ export default function HeroSection(){
                 <DialogTrigger asChild>
                     <Button onClick= {handleOrderNow}>Order now!</Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className= " h-[550px] bg-gradient-to-bl from-black from-60% to-grey-800 rounded-2xl shadow-lg border-none max-w-sm p-4 ">
                     <VisuallyHidden.Root>
                         <DialogTitle>Login</DialogTitle>
                         <DialogDescription>

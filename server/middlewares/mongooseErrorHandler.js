@@ -8,7 +8,7 @@ export default function mongooseErrorHandler(err, req, res, next){
     else if(err.errors){
         const errors = {};    
         Object.values(err.errors).forEach(({properties}) => properties? errors[properties.path] = properties.message : false);
-        if (Object.keys(errors).length) return next({err: errors, code: 409});
+        if (Object.keys(errors).length) return next({err: errors, code: 400});
         else return next({err: err.message, code: 500});
     }
    next(err);

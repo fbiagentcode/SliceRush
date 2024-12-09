@@ -1,5 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 
+import {ScrollArea} from "../ui/scroll-area";
+
 import { authContext } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
 import InputWithLabel from "../ui/InputWithLabel";
@@ -86,34 +88,36 @@ export default function EditProfile({user}){
         <DialogTrigger asChild>
             <Button>Edit Profile</Button>
         </DialogTrigger>
-        <DialogContent className= "overflow-y-scroll max-h-screen">
+        <DialogContent className=  "p-4 h-[550px] bg-gradient-to-bl from-black from-60% to-grey-800 rounded-2xl shadow-lg border-none max-w-sm">
             <DialogHeader>
-                <DialogTitle>Edit your profile</DialogTitle>
+                <DialogTitle className= "text-white text-2xl tracking-tight">Edit your profile</DialogTitle>
                 <DialogDescription>
                     Make changes to your profile here. Click <i>Save</i> when done. 
                 </DialogDescription>
                 { success && <p>Changes saved. Image updates may take a while to show up.</p> }
             </DialogHeader>
-            <div>
-                { imageUrl && <img src= {imageUrl} alt= {`${user.name}'s avatar`} crossOrigin= "anonymous"/> }
-                <FileInput setImage= {setImage} />
-                <InputWithLabel 
-                    type="text"
-                    fieldName= "Name:"
-                    fieldValue= {name} 
-                    setField= {setName}
-                    
-                />
-                <InputWithLabel 
-                    type="email"
-                    fieldName= "Email:"
-                    fieldValue= {email} 
-                    setField= {setEmail}
-                />
-                { error?.errors?.email && <p>{error.errors?.email}</p> }
-            </div>
+            <ScrollArea className= "w-full rounded-lg ">
+                <div className= "flex flex-col  justify-center items-center gap-y-4">
+                    { imageUrl && <img className= "rounded-full w-1/2" src= {imageUrl} alt= {`${user.name}'s avatar`} crossOrigin= "anonymous"/> }
+                    <FileInput setImage= {setImage} />
+                    <InputWithLabel 
+                        type="text"
+                        fieldName= "Name:"
+                        fieldValue= {name} 
+                        setField= {setName}
+                        
+                    />
+                    <InputWithLabel 
+                        type="email"
+                        fieldName= "Email:"
+                        fieldValue= {email} 
+                        setField= {setEmail}
+                    />
+                    { error?.errors?.email && <p>{error.errors?.email}</p> }
+                </div>
+            </ScrollArea>
             <DialogFooter>
-                { isLoading? <ButtonLoading /> : 
+                { isLoading? <ButtonLoading /> : changesMade && 
                 <Button onClick= {saveChanges}>Save</Button> }
                 { error?.errors && !error?.errors?.email && <p>{error.errors}</p> }
             </DialogFooter>

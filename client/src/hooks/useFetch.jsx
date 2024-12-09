@@ -16,9 +16,9 @@ export default function useFetch(){
             if (response.ok){
                 return result;
             }
-            
+
             // remove local storage user details if invalid token
-            if (result.errors.includes("token")) {
+            if (result?.errors instanceof Array && result?.errors?.includes("token")) {
                 dispatch({type: "LOGOUT"});
             }
             

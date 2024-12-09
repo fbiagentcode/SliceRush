@@ -7,23 +7,23 @@ import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 export default function Cart(){
     const { cart } = useContext(cartContext);
 
-    return <Card>
+    return <Card className= "bg-transparent border-none text-grey-10">
         <CardHeader>
-            <h1>Your selected items:</h1>
+            <h1 className= "text-xl text-white-50">Your selected items:</h1>
         </CardHeader>
         <CardContent>
             { cart.products?.map(({_id, name, qty}, i) => 
                 <FieldValueRow key= {i} field= {name} value= {qty} />) }
         </CardContent>
-        <CardFooter>
+        <CardFooter >
             <FieldValueRow field= "Total" value= {cart.amount} />
         </CardFooter>
     </Card>
 }
 
 function FieldValueRow({field, value}){
-    return <div>
-        <p>{field}</p>
+    return <div className= "text-white-50">
+        <p className= "text-grey-50">{field}</p>
         <p>{value}</p>
     </div>
 }

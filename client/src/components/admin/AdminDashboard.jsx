@@ -49,12 +49,18 @@ export default function AdminDashboard(){
         getDetails();
     }, [auth]);
 
-    return <div>
+    return <div className= "max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative grid grid-cols-1 sm:grid-cols-12 gap-10">
         { error && <Error code= {error.code}/> }
         { auth && <>
-            <OrdersTable orders= {orders} setOrders= {setOrders}/> 
-            <ProductStockManager products= {ingredients} setProducts= {setIngredients}/>
-            <Profile user= {admin} /> 
+            <div className= "sm:col-span-8 lg:col-span-8 order-1">
+                    <OrdersTable orders= {orders} setOrders= {setOrders}/> 
+            </div>
+            <div className= "sm:col-span-12 lg:col-span-4 order-3 sm:order-2">
+                <Profile user= {admin} /> 
+            </div>
+            <div className="rounded-2xl bg-gradient-to-b from-red via-black to-[rgba(255,0,0,1)] row-start-2 sm:col-span-12 order-3 lg:col-span-12">
+                <ProductStockManager products= {ingredients} setProducts= {setIngredients}/>
+            </div>
         </> }
     </div>
 }

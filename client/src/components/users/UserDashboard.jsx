@@ -40,11 +40,15 @@ export default function UserDashboard(){
         getUserDetails();
     }, [auth]);
 
-    return (<div>
+    return (<div className= "max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative grid grid-cols-1 sm:grid-cols-12 gap-10">
         { error? <Error code= {error.code} /> : 
         <>
-            <OrdersTable orders= {orders} />
-            <Profile user= {user} />
+            <div className= "sm:col-span-8 lg:col-span-9 order-1">
+                <OrdersTable orders= {orders} />
+            </div>
+            <div className= "sm:col-span-12 lg:col-span-3 order-3 sm:order-2">
+                <Profile user= {user} />
+            </div>
         </> }
     </div>)
 }

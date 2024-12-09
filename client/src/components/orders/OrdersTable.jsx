@@ -1,19 +1,26 @@
 import OrderCard from "./OrderCard";
+
+import { ScrollArea } from "../ui/scroll-area";
 import { Table, TableBody, TableRow, TableHead, TableCell, TableHeader } from "../ui/table";
 
 export default function OrdersTable({orders, setOrders}){
-    return <Table>
+    return (<ScrollArea className= "h-[350px] rounded-lg border-none">
+    <Table className= "bg-transparent border-none">
         <TableHeader>
-            <TableRow>
-                <TableHead>Order ID</TableHead>
+            <TableRow className= "bg-grey-800 text-white border-none ">
+                <TableHead >Order ID</TableHead>
                 <TableHead>Placed at</TableHead>
                 <TableHead>User ID</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Order</TableHead>
             </TableRow>
         </TableHeader>
-        <TableBody>
-            { orders.map(({_id, userId, status, placedAt}, i) => <TableRow key= {i}>
+        <TableBody className= "text-grey-10 bg-grey-950">
+            { orders.map(({_id, userId, status, placedAt}, i) => 
+            <TableRow 
+                className= "border-b-3 border-black"
+                key= {i}
+            >
                 <TableCell>{_id}</TableCell>
                 <TableCell>
                     {new Date(placedAt).toLocaleTimeString("en-US", {
@@ -31,4 +38,6 @@ export default function OrdersTable({orders, setOrders}){
             </TableRow>) }
         </TableBody>
     </Table>
+    </ScrollArea>
+    );
 }

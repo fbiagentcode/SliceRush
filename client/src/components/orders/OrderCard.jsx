@@ -44,13 +44,13 @@ export default function OrderCard({order, setOrders}){
 
     return (
     <TableCell>
-        <Dialog>
+        <Dialog >
             <DialogTrigger asChild>
                 <Button variant= "ghost">View Order</Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className= "bg-gradient-to-r from-grey-800 from-10% to-black rounded-2xl shadow-lg max-w-sm p-6 text-white">
                 <DialogHeader>
-                    <DialogTitle>Order Details:</DialogTitle>
+                    <DialogTitle className= "font-helvetica text-xl mb-4">Order Details:</DialogTitle>
                     <VisuallyHidden.Root>
                         <DialogDescription>Order details are listed below.</DialogDescription>
                     </VisuallyHidden.Root>
@@ -62,9 +62,9 @@ export default function OrderCard({order, setOrders}){
                     /> }
                 </DialogHeader>
                 <Table>
-                    <TableBody>
+                    <TableBody className= "text-white">
                         { Object.entries(order).map(([field, val], i) => <TableRow key= {i}>
-                            <TableHead>{field}</TableHead>
+                            <TableHead className= "text-grey-10">{field}</TableHead>
                             <TableCell>{val}</TableCell>
                         </TableRow>) }
                     </TableBody>
@@ -85,11 +85,19 @@ function OrderStatusSetter({status: {setStatus, status}, changes: {saveChanges, 
         setChangesMade(true);
     };
     
-    return <div>
-        { statuses.map((option, i) => (
-            <Button key= {i} onClick= { () => updateStatus(option) }>{option}</Button>
-        )) }
-        { error?.errors && <p>{error?.errors}</p> }
+    return <div className= "flex flex-col items-start gap-y-4 ">
         { changesMade && (isLoading? <ButtonLoading/> : <Button onClick= {saveChanges}>Save Changes</Button>) }
+        { error?.errors && <p>{error?.errors}</p> }
+        <div className= "flex flex-row gap-4">
+            { statuses.map((option, i) => (
+                <Button 
+                    className= { option === status? "bg-grey-500" : "bg-black" }
+                    key= {i} 
+                    onClick= { () => updateStatus(option) }
+                >
+                    {option}
+                </Button>
+            )) }
+        </div>
     </div>
 }

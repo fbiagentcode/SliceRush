@@ -2,12 +2,14 @@ import { Carousel, CarouselItem, CarouselNext, CarouselPrevious, CarouselContent
 import StockCounter from "./StockCounter";
 import Product from "./Product";
 export default function ProductCarousel({products, onItemClick, onStockChange, displayStock}){
-    return <Carousel className= "w-full">
-        <CarouselContent>
+    return <Carousel opts={{
+        align: "start",
+      }}className= "w-full">
+        <CarouselContent >
             { products.map((product, i) => (
-                <CarouselItem className= "md:basis-1/2 lg:basis-1/4">
+                <CarouselItem key= {i} className= "mb-0 md:basis-1/2 lg:basis-1/4">
                     <Product 
-                        key= {i}
+                        
                         product= { {...product} }
                         onClick= { onItemClick && (() => onItemClick(product)) }
                         displayStock= {displayStock}

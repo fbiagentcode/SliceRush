@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 import useProducts from "../hooks/useProducts";
 
+import {ScrollArea} from "../components/ui/scroll-area";
 import Cart from "../components/orders/Cart";
 import OrderConfirmation from "../components/orders/OrderConfirmation";
 import PizzaVarieties from "../components/products/PizzaVarieties";
@@ -35,15 +36,16 @@ export default function Order(){
     }, []);
 
     
-    return error? <Error code= {error.code}/> : (<>
-        <div>
+    return error? <Error code= {error.code}/> : (
+    <div className= " max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative grid grid-cols-1 sm:grid-cols-12 ">
+        <div className= "col-span-12 flex w-full justify-center gap-4">
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button>View Cart</Button>
+                    <Button className="sm: w-auto md:font-helvetica text-3xl mb-4 tracking-tight py-20 px-20 text-center">View Cart</Button>
                 </DialogTrigger>
-                <DialogContent className= "overflow-y-scroll max-h-screen">
+                <DialogContent className= "bg-gradient-to-bl from-black from-60% to-grey-800 border-none overflow-y max-h-screen">
                     <DialogHeader>
-                        <DialogTitle>Cart</DialogTitle>
+                        <DialogTitle className= "text-white tracking-tight text-2xl m-4">Cart</DialogTitle>
                     </DialogHeader>
                     <Cart/>
                 </DialogContent>
@@ -51,30 +53,34 @@ export default function Order(){
 
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button>Order Now</Button>                
+                    <Button className="font-helvetica text-3xl tracking-tight py-20 px-20 text-center">Order Now</Button>                
                 </DialogTrigger>
-                <DialogContent className= "overflow-y-scroll max-h-screen">
+                <DialogContent className= "bg-gradient-to-bl from-black from-60% to-grey-800 overflow-y max-h-screen">
                     <DialogHeader>
-                        <DialogTitle>Confirm Order Details:</DialogTitle>
+                        <DialogTitle className= "text-white tracking-tight text-2xl m-4 mb-0">Confirm Order Details:</DialogTitle>
                     </DialogHeader>
                     <OrderConfirmation/>
                 </DialogContent>
             </Dialog>
         </div>
-        <div>
+        <div className= "flex flex-col items-center justify-center text-grey-10 col-span-12 sm:col-span-8 lg:col-span-12 order-1 p-4">
             <Dialog open= {pizzaCreatorOpen} onOpenChange= {setPizzaCreatorOpen}>
                 <DialogTrigger asChild>
-                    <Button>Create your own pizza!</Button>
+                    <Button className="tracking-tight font-helvetica text-5xl py-40 px-20 mb-4 sm:w-auto text-center">Create your own pizza!</Button>
                 </DialogTrigger>
-                <DialogContent className= "overflow-y-scroll max-h-screen">
+                <DialogContent className= "bg-gradient-to-bl from-black from-45% to-grey-500">
                     <DialogHeader>
-                        <DialogTitle>Customize your pizza!</DialogTitle>
+                        <DialogTitle className= "text-2xl text-white m-4 mb-0 tracking-tight">Customize your pizza!</DialogTitle>
                     </DialogHeader>
-                    <CustomPizzaCreator products= {ingredients} setOpen= {setPizzaCreatorOpen}/>
+                    <ScrollArea className= "h-[450px] w-full rounded-lg">
+                        <CustomPizzaCreator products= {ingredients} setOpen= {setPizzaCreatorOpen}/>
+                    </ScrollArea>
                 </DialogContent>
             </Dialog>
-            <p>Or, pick from the many delicious pizzas available</p>
-            <PizzaVarieties products= {pizzaVarieties} />
+            <p className= "my-8 text-lg text-center">Or, pick from the many delicious pizzas available</p>
+
+                <PizzaVarieties products= {pizzaVarieties} />
+            
         </div> 
-    </>)
+    </div>)
 }

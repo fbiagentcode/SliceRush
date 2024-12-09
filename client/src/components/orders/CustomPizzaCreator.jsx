@@ -1,5 +1,6 @@
 import { useState, useContext, useMemo } from "react";
 
+
 import { cartContext } from "../../contexts/CartContext";
 import ProductCarousel from "../products/ProductCarousel";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
@@ -67,28 +68,30 @@ export default function CustomPizzaCreator({products, setOpen}){
         setOpen(false);
     };
 
-    return <Card>
-        <CardContent>
-            <p>Start by picking a base.</p>
+    return (
+    <Card className= " bg-transparent border-none text-white">
+        <CardContent className= "text-grey-10 flex flex-col justify-center gap-y-2 ">
+            <p className= "mt-4">Start by picking a base.</p>
             <ProductCarousel products= {bases} onItemClick= {(base) => setBase(base)}/>
-            { error?.base && <p>{error.base}</p> }
+            { error?.base && <p className= "text-white">{error.base}</p> }
 
-            <p>Pick a cheese type.</p>
+            <p className= "mt-4">Pick a cheese type.</p>
             <ProductCarousel products= {cheeses} onItemClick= {(cheese) => setCheese(cheese)}/>
-            { error?.cheese && <p>{error.cheese}</p> }
+            { error?.cheese && <p className= "text-white">{error.cheese}</p> }
 
-            <p>Now for the sauce.</p>
+            <p className= "mt-4">Now for the sauce.</p>
             <ProductCarousel products= {sauces} onItemClick= {(sauce) => setSauce(sauce)}/>
-            { error?.sauce && <p>{error.sauce}</p> }
+            { error?.sauce && <p className= "text-white">{error.sauce}</p> }
 
-            <p>Finally, veggies.</p>
+            <p className= "mt-4">Finally, veggies.</p>
             <ProductCarousel products= {veggies} onItemClick= {addVeggie}/>
-            { error?.veggies && <p>{error.veggies}</p> }
+            { error?.veggies && <p className= "text-white">{error.veggies}</p> }
         </CardContent>
         <CardFooter>
             <Button onClick= {addPizza}>Craft your pizza</Button>
         </CardFooter>
     </Card>
+   )
 }
 
 // display msg if ingredient not selected

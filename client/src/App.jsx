@@ -7,7 +7,7 @@ import Error from "./pages/Error.jsx";
 import AccountVerification from "./pages/AccountVerification.jsx";
 import AdminDashboard from "./components/admin/AdminDashboard.jsx";
 import UserDashboard from "./components/users/UserDashboard.jsx";
-import Navbar from "./components/navbar/Navbar.jsx";
+import Header from "./components/header/Header.jsx";
 import HeroSection from "./components/home/HeroSection.jsx";
 import Order from "./pages/Order.jsx";
 import ResetPassword from "./components/auth/ResetPassword.jsx";
@@ -19,7 +19,7 @@ function App() {
         <AuthContextProvider>
         <CartContextProvider>
         <ResetCountersContextProvider>
-            <Navbar/>
+            <Header/>
             <Routes>
                 <Route path="/" element= { <HeroSection/> } />
                 <Route path="/order" element= { <Order/> } />

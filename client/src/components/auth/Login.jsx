@@ -46,9 +46,10 @@ export default function Login(){
     const isForgotPassword = searchParams.get("forgotPassword");
     const isSignUp = searchParams.get("signUp");
 
-    return isForgotPassword? <ForgotPassword/> : isSignUp? <SignUp/> : <Card>
-        <CardHeader>LOGIN</CardHeader>
-        <CardContent>
+    return isForgotPassword? <ForgotPassword/> : isSignUp? <SignUp/> : 
+    <Card className= "bg-transparent border-none text-white">
+        <CardHeader className= "text-2xl tracking-tight">LOGIN</CardHeader>
+        <CardContent className= "text-grey-5 flex flex-col justify-center gap-y-4 ">
             <InputWithLabel 
                 type="email"
                 fieldName= "Email:"
@@ -65,18 +66,25 @@ export default function Login(){
                 />     
             { error?.errors && <p>{error.errors}</p> }
         </CardContent>
-        <CardFooter>
+        <CardFooter className= "flex flex-col items-even gap-y-0.5 text-white-50">
             { isLoading? <ButtonLoading/> :
-            <Button onClick= { () => login() }>Login</Button> }
+            <Button 
+                className= "text-md py-2 px-4 bg-grey-100 rounded-lg" 
+                onClick= { () => login() }
+            >
+                Login
+            </Button> }
             <p 
+                className= "mt-4"
                 onClick= { () => setSearchParams({"forgotPassword": true}) }
             >
                 Forgot password?
             </p>
-            <hr/>
-            <p>OR</p>
+            <hr className="h-px w-full my-2 bg-grey-100 border-0"></hr>
+            <p className= "text-white">OR</p>
             <p>Don't have an account? </p>
-            <Button 
+            <Button
+                className= "text-md py-2 my-4 px-4 bg-grey-100 rounded-lg " 
                 onClick= { () => setSearchParams({"signUp": true}) }
             >
                 Sign Up

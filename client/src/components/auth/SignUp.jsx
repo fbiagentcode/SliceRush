@@ -41,9 +41,9 @@ export default function SignUp(){
         user= { {name, email} } 
         route= { `${origin}/auth/resend-confirmation-mail` }>
             <SignUpConfirmation name= {name} />
-        </Confirmation> : <Card>
-        <CardHeader>Create an account today!</CardHeader>
-        <CardContent>
+        </Confirmation> : <Card className= "bg-transparent border-none text-white">
+        <CardHeader className= "text-2xl tracking-tight">Create an account today!</CardHeader>
+        <CardContent className= "text-grey-5 flex flex-col justify-center gap-y-2 " >
             <InputWithLabel 
                 type="email"
                 fieldName= "Email:"
@@ -70,9 +70,14 @@ export default function SignUp(){
                 />     
             { error?.errors?.password && <InputErrorField field= "password" errorMsg= { error?.errors?.password } /> }
         </CardContent>
-        <CardFooter>
+        <CardFooter className= "flex flex-col items-even gap-y-0.5 text-white-50">
             { isLoading? <ButtonLoading/> :
-            <Button onClick= { () => signUp() }>Sign Up</Button> }
+            <Button 
+                className= "text-md py-2 px-8 bg-grey-100 rounded-xl "
+                onClick= { () => signUp() }
+            >
+                Sign Up
+            </Button> }
         </CardFooter>
     </Card>)
 }
@@ -87,10 +92,9 @@ function SignUpConfirmation({name}){
 
 function InputErrorField({field, errorMsg}){
     const text = errorMsg.split(`${field}\``)[1];
-
     return(<>
-        { text? <p>{field[0].toUpperCase() + field.slice(1) + text}</p> :
-        <p>{errorMsg}</p> }
+        { text? <p className= "text-white text-sm p-2 ">{field[0].toUpperCase() + field.slice(1) + text}</p> :
+        <p className= "text-sm py-2 px-4 bg-grey-5 rounded-lg ">{errorMsg}</p> }
     </>)
 }
 

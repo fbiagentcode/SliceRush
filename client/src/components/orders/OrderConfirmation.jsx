@@ -46,7 +46,7 @@ export default function OrderConfirmation(){
         return () => controller.current.abort();
     }, []);
 
-    return <div>
+    return <div className= "flex flex-col justify-center gap-4 ">
         <Cart/>
         <InputWithLabel 
             fieldName= "Destination Address:"

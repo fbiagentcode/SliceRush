@@ -12,12 +12,17 @@ export default {
     ],
     theme: {
     	extend: {
+			backgroundImage: {
+				'main': "linear-gradient(179deg, rgba(0,0,0,1) 70%, rgba(149,10,10,1) 90%, rgba(255,0,0,1) 100%)"
+			},
 			fontFamily: {
 				aeonik: ["aeonik", "sans-serif"],
 				"aeonik-bold": ["aeonik-bold"],
 				"aeonik-lt": "aeonik-lt",
 				helvetica: "helvetica",
+				neue: "neue",
 				"helvetica-ex": "helvetica-ex",
+				"semibold": "inter-semi-bold",
 				sans: ["inter", ...fontFamily.sans]
 			},
     		borderRadius: {
@@ -26,8 +31,19 @@ export default {
     			sm: 'calc(var(--radius) - 4px)'
     		},
     		colors: {
-				'grey': { 10: "#b2ada9", 50: "#a5a19e", 100: "#282421", 500: "#49413e" },
-				'black': { 50: "#080607" },
+				'red': {DEFAULT: '#991b1b'},
+				'white': {DEFAULT: "#ffffff", 50: "#cccccc"},
+				'grey': { 
+					5: "#a3a3a3", 
+					10: "#b2ada9", 
+					50: "#a5a19e", 
+					100: "#282421", 
+					500: "#49413e", 
+					800: "#222222",
+					850: "#181819",
+					950: "#101010"
+				},
+				'black': { DEFAULT: "#080607" },
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
     			card: {
@@ -68,8 +84,8 @@ export default {
     				'4': 'hsl(var(--chart-4))',
     				'5': 'hsl(var(--chart-5))'
     			}
-    		}
-    	}
+    		},
+		}
     },
     plugins: [require("tailwindcss-animate")],
 }

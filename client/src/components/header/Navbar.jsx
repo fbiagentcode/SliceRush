@@ -1,5 +1,5 @@
 import { useContext, useRef, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import useFetch from "../../hooks/useFetch";
 import { Button } from "../ui/button";
@@ -21,13 +21,16 @@ const origin = import.meta.env.VITE_ORIGIN;
 
 export default function Navbar(){
     const { fetchHandler, isLoading, error } = useFetch();
+    const navigate = useNavigate();
     const controller = useRef();
     const { user, dispatch } = useContext(authContext);
 
     const handleLogout = async () => {
         const result = await fetchHandler(`${origin}/auth/logout`, controller.current.signal);
-        if (result)
-            dispatch({type: "LOGOUT"});
+        
+        dispatch({type: "LOGOUT"});
+        navigate("/");
+        
     };
 
     useEffect(() => {
@@ -36,11 +39,8 @@ export default function Navbar(){
         return () => controller.current.abort();
     }, []);
 
-    return <NavigationMenu>
-        <NavigationMenuList>
-            <NavigationMenuItem>
-                Slice Rush
-            </NavigationMenuItem>
+    return <NavigationMenu className= "mx-8 grow-2 font-semi-bold">
+        <NavigationMenuList className= "flex flex-row gap-x-8 justify-even items-center">
             <NavigationMenuItem>
                 <NavLink to= "/">Home</NavLink>
             </NavigationMenuItem>
@@ -56,7 +56,7 @@ export default function Navbar(){
                 <NavigationMenuItem>
                     { isLoading? <ButtonLoading>Logging out...</ButtonLoading> :
                     <Button 
-                        variant= "ghost" 
+                        className= "text-2xl bg-transparent text-grey-10"
                         onClick= {handleLogout}
                     >
                         Log Out
