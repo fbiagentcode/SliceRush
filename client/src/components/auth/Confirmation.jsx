@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 import useFetch from "../../hooks/useFetch";
 
+import { ScrollArea } from "../ui/scroll-area"
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
 import ButtonLoading from "../ui/ButtonLoading";
@@ -29,15 +30,18 @@ export default function Confirmation({ user: {email, name}, children, route }){
         return () => controller.current.abort();
     }, []);
 
-    return <Card>
-        <CardContent>
-            <img src="/images/mailSent.png" alt="mail sent" />
-            { children }
-            { isLoading? <ButtonLoading/> : <Button onClick= { () => resendMail(route) }>Resend Email</Button> }
-        </CardContent>
-        <CardFooter>
-            { mailSent && <p>A confirmation mail has been sent to your inbox.</p> }
-            { error && error.errors }
-        </CardFooter>
-    </Card>
+    return  (
+    <ScrollArea className= " w-full rounded-lg ">
+        <Card className= "bg-transparent border-none text-white">
+            <CardContent className= "text-grey-5 flex flex-col justify-center gap-y-4 ">
+                <img src="/images/mailSent.png" alt="mail sent" />
+                { children }
+                { isLoading? <ButtonLoading/> : <Button onClick= { () => resendMail(route) }>Resend Email</Button> }
+            </CardContent>
+            <CardFooter>
+                { mailSent && <p>A confirmation mail has been sent to your inbox.</p> }
+                { error && error.errors }
+            </CardFooter>
+        </Card>
+    </ScrollArea>)
 }

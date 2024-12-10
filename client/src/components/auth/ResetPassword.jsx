@@ -39,11 +39,11 @@ export default function ResetPassword(){
         return () => controller.current.abort();
     }, []);
 
-    return success? <ResetSuccess/> : <Card>
-        <CardHeader>
-            <h1>Reset your password</h1>
+    return success? <ResetSuccess/> : <Card className= "mt-28 h-max flex flex-col items-center bg-transparent border-none text-white">
+        <CardHeader className= "text-4xl tracking-tight">
+            <h1 className= "mt-20">Reset your password</h1>
         </CardHeader>
-        <CardContent>
+        <CardContent className= "text-grey-5 p-14 text-xl gap-y-5 flex flex-col justify-center">
             <InputWithLabel
                 fieldName= "New Password:"
                 fieldValue= {password}
@@ -57,10 +57,10 @@ export default function ResetPassword(){
                 type= "password"
             />
         </CardContent>
-        <CardFooter>
+        <CardFooter className= "flex flex-col justify-center gap-y-4">
             { error?.errors && <p>{error.errors}</p> }
             { isLoading? <ButtonLoading/> :
-            <Button onClick= { resetPassword }>Reset</Button> }
+            <Button className= "font-helvetica tetx-xl" onClick= { resetPassword }>Reset</Button> }
         </CardFooter>
     </Card>
 }

@@ -39,11 +39,11 @@ export default function ForgotPassword(){
             user= { {email} }
         >
             <ForgotPasswordConfirmation/>
-        </Confirmation> : <Card>
+        </Confirmation> : <Card className= "bg-transparent border-none text-white">
         <CardHeader>
             <h1>Reset Password</h1>
         </CardHeader>
-        <CardContent>
+        <CardContent className= "text-grey-5 flex flex-col justify-center gap-y-4 ">
             <p>Please enter your email address to confirm password reset.</p>
             <InputWithLabel 
                 fieldName= "Email:" 
@@ -52,7 +52,7 @@ export default function ForgotPassword(){
                 type="email" 
             />
         </CardContent>
-        <CardFooter>
+        <CardFooter className= "flex flex-col justify-center gap-y-4">
             { error?.errors && <p>{error.errors}</p> }
             { isLoading? <ButtonLoading/> : 
             <Button onClick= { sendMail }>Send mail</Button> }

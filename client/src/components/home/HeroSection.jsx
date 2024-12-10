@@ -1,12 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import Login from "../auth/Login";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import AccountConfirmationSuccess from "../auth/AccountConfirmationSuccess";
+import Success from "../auth/Success";
 import { authContext } from "../../contexts/AuthContext";
 
 export default function HeroSection(){
@@ -62,7 +63,7 @@ export default function HeroSection(){
         <CardFooter>
             <Dialog open= {loginOpen} onOpenChange={setLoginOpen}>
                 <DialogTrigger asChild>
-                    <Button className= "tracking-tight font-helvetica py-10 absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[130%] z-50 text-3xl text-white" onClick= {handleOrderNow}>Order now!</Button>
+                    <Button className= "hover:bg-red-500 transition-colors rounded-full tracking-tight font-helvetica py-10 absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[130%] z-50 text-3xl text-white" onClick= {handleOrderNow}>Order now!</Button>
                 </DialogTrigger>
                 <DialogContent className= " h-[550px] bg-gradient-to-bl from-black from-60% to-grey-800 rounded-2xl shadow-lg border-none max-w-sm p-4 ">
                     <VisuallyHidden.Root>
@@ -74,7 +75,13 @@ export default function HeroSection(){
                     <Login/>
                 </DialogContent>
             </Dialog>
-            <AccountConfirmationSuccess open= {confirmationSuccessOpen} setOpen={setConfirmationSuccessOpen} />
+            <Success 
+                title= "Registration Success"
+                msg= "Thank you for registering!"
+                desc= "Thank you for registering! Your account registration is successfully complete. You may login now with your credentials to start using Slice Rush."
+                open= {confirmationSuccessOpen} 
+                setOpen={setConfirmationSuccessOpen} 
+            />
         </CardFooter>
     </Card>
 }

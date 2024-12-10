@@ -84,7 +84,7 @@ export default function SignUp(){
 
 function SignUpConfirmation({name}){
     return (<>
-        <h1>You're one step away</h1>   
+        <h1 className= "font-helvetica text-lg text-white">You're one step away</h1>   
         <p>from a delicious pizza {name}. Check your mail to confirm account registration. </p>
         <p>Click the button below to resend an email if you do not see anything within the next 10 minutes.</p>
     </>)

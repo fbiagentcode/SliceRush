@@ -75,7 +75,7 @@ export default function Login(){
                 Login
             </Button> }
             <p 
-                className= "mt-4"
+                className= "mt-4 hover:text-white hover:cursor-pointer transition-colors"
                 onClick= { () => setSearchParams({"forgotPassword": true}) }
             >
                 Forgot password?

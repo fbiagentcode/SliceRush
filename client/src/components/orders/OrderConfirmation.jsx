@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import useFetch from "../../hooks/useFetch";
 import { cartContext } from "../../contexts/CartContext";
+import {ScrollArea} from "../ui/scroll-area"
 import Cart from "./Cart";
 import InputWithLabel from "../ui/InputWithLabel";
 import { Button } from "../ui/button";
@@ -24,7 +25,7 @@ export default function OrderConfirmation(){
             deliveryAddress: destination,
             total: {amount: cart.amount, currency: "INR"},
             cart,
-            successUrl: `${window.location}`,
+            successUrl: `${window.location.origin}/order?success=true`,
             cancelUrl:  `${window.location.origin}/dashboard`
         };
         
@@ -46,13 +47,15 @@ export default function OrderConfirmation(){
         return () => controller.current.abort();
     }, []);
 
-    return <div className= "flex flex-col justify-center gap-4 ">
-        <Cart/>
-        <InputWithLabel 
-            fieldName= "Destination Address:"
-            fieldValue= {destination}
-            setField= {setDestination}
-        />
-        { destination && Boolean(cart.amount) && <Button onClick= {handlePayment}>Proceed to payment</Button> }
-    </div>
+    return (
+        <div className= "flex flex-col justify-center gap-4 ">
+            <Cart/>
+            <InputWithLabel 
+                fieldName= "Destination Address:"
+                fieldValue= {destination}
+                setField= {setDestination}
+            />
+            { destination && Boolean(cart.amount) && <Button className= "mx-4" onClick= {handlePayment}>Proceed to payment</Button> }
+        </div>
+    )
 }
