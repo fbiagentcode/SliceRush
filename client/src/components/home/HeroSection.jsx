@@ -44,26 +44,49 @@ export default function HeroSection(){
 
     return <Card className= "text-center mt-40 bg-transparent border-none w-full relative h-screen overflow-hidden">
         <CardContent className= "p-0">
-            <div className= "bg-transparent h-full absolute z-20 top-1/2 left-1/3 transform translate-x-[-25%] translate-y-[-50%] leading-none ">
-                <h1 className= "px-7 font-unison text-red-400 text-7xl md:text-9xl p-0">Slice Rush</h1>
-                <p className= "px-4 text-white mt-8 md:px-4 text-xl">Fresh, fast, and irresistibly delicious – Your pizza cravings end here at SliceRush!</p>
-            </div>
-            <div className="inset-0 relative min-h-screen min-w-full flex items-center justify-center">
-  <video
-    autoPlay
-    loop
-    muted
-    className="absolute h-auto w-full max-w-none  scale-100 sm:scale-150"
-  >
-    <source src="/videos/pizza.mp4" type="video/mp4" />
-  </video>
-</div>
-
+            <motion.div 
+               
+                className= "bg-transparent h-full absolute z-20 top-1/2 left-1/3 transform translate-x-[-25%] translate-y-[-50%] leading-none "
+            >
+                <motion.h1 
+                    initial= {{opacity: 0}}
+                    animate= {{opacity: 1}}
+                    transition= {{delay: 0.3, duration: 1.5}}
+                    className= "px-7 font-unison text-red-400 text-7xl md:text-9xl p-0"
+                >
+                    Slice Rush
+                </motion.h1>
+                <motion.p 
+                    initial= {{opacity: 0}}
+                    animate= {{opacity: 1}}
+                    transition= {{delay: 0.8, duration: 1}}
+                    className= "px-4 text-white mt-8 md:px-4 text-xl"
+                >
+                    Fresh, fast, and irresistibly delicious – Your pizza cravings end here at SliceRush!
+                </motion.p>
+            </motion.div>
+            <motion.div 
+                initial= {{opacity: 0}}
+                animate= {{opacity: 1}}
+                transition= {{delay: 1.3, duration: 1.5}}
+                className="inset-0 relative min-h-screen min-w-full flex items-center justify-center"
+            >
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    className="absolute h-auto w-full max-w-none  scale-100 sm:scale-150"
+                >
+                    <source src="/videos/pizza.mp4" type="video/mp4" />
+                </video>
+            </motion.div>
         </CardContent>
         <CardFooter>
             <Dialog open= {loginOpen} onOpenChange={setLoginOpen}>
                 <DialogTrigger asChild>
-                    <Button className= "hover:bg-red-500 transition-colors rounded-full tracking-tight font-helvetica py-10 absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[130%] z-50 text-3xl text-white" onClick= {handleOrderNow}>Order now!</Button>
+                    <Button className= "hover:bg-red-500 transition-colors ease-in-out duration-500 rounded-full tracking-tight font-helvetica py-10 absolute top-1/2 left-1/2 transform translate-x-[-50%] translate-y-[130%] z-50 text-3xl text-white" onClick= {handleOrderNow}>
+                        Order now!
+                    </Button> 
                 </DialogTrigger>
                 <DialogContent className= " h-[550px] bg-gradient-to-bl from-black from-60% to-grey-800 rounded-2xl shadow-lg border-none max-w-sm p-4 ">
                     <VisuallyHidden.Root>

@@ -72,19 +72,19 @@ export default function CustomPizzaCreator({products, setOpen}){
     <Card className= "w-[400px] bg-transparent border-none text-white">
         <CardContent className= " text-grey-10 flex flex-col justify-center gap-y-2 ">
             <p className= "mt-4">Start by picking a base.</p>
-            <ProductCarousel className= "" products= {bases} onItemClick= {(base) => setBase(base)}/>
+            <ProductCarousel onHover= "hover:cursor-pointer" className= "" products= {bases} onItemClick= {(base) => setBase(base)}/>
             { error?.base && <p className= "text-white">{error.base}</p> }
 
             <p className= "mt-4">Pick a cheese type.</p>
-            <ProductCarousel products= {cheeses} onItemClick= {(cheese) => setCheese(cheese)}/>
+            <ProductCarousel onHover= "hover:cursor-pointer" products= {cheeses} onItemClick= {(cheese) => setCheese(cheese)}/>
             { error?.cheese && <p className= "text-white">{error.cheese}</p> }
 
             <p className= "mt-4">Now for the sauce.</p>
-            <ProductCarousel products= {sauces} onItemClick= {(sauce) => setSauce(sauce)}/>
+            <ProductCarousel onHover= "hover:cursor-pointer" products= {sauces} onItemClick= {(sauce) => setSauce(sauce)}/>
             { error?.sauce && <p className= "text-white">{error.sauce}</p> }
 
             <p className= "mt-4">Finally, veggies.</p>
-            <ProductCarousel products= {veggies} onItemClick= {addVeggie}/>
+            <ProductCarousel onHover= "hover:cursor-pointer" products= {veggies} onItemClick= {addVeggie}/>
             { error?.veggies && <p className= "text-white">{error.veggies}</p> }
         </CardContent>
         <CardFooter>

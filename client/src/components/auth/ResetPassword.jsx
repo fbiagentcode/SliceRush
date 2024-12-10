@@ -68,14 +68,16 @@ export default function ResetPassword(){
 function ResetSuccess(){
     const navigate = useNavigate();
 
-    return <Card>
-        <CardContent>
-            <img src= "/images/passwordReset.png" alt= "reset successful" />
-            <h1>Your password was successfully reset.</h1>
-            <p>You can login again with your updated info.</p>
-        </CardContent>
-        <CardFooter>
-            <Button onClick= { () => navigate("/") }>Home</Button>
-        </CardFooter>
-    </Card>
+        return <div className= "flex flex-col justify-center items-center">
+            <Card className= "flex flex-col justify-center items-center h-[550px] bg-gradient-to-bl from-black from-60% to-grey-800 rounded-2xl shadow-lg border-none max-w-sm p-4  border-none text-white">
+            <CardContent className= "text-grey-5 flex flex-col justify-center items-center gap-y-4 ">
+                <img src= "/images/passwordReset.png" alt= "reset successful" />
+                <h1 className= "text-2xl text-white tracking-tight">Your password was successfully reset.</h1>
+                <p>You can login again with your updated info.</p>
+            </CardContent>
+            <CardFooter>
+                <Button onClick= { () => navigate("/") }>Home</Button>
+            </CardFooter>
+            </Card>
+        </div>
 }

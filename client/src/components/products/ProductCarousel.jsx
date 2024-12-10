@@ -1,13 +1,13 @@
 import { Carousel, CarouselItem, CarouselNext, CarouselPrevious, CarouselContent } from "../ui/carousel";
 import StockCounter from "./StockCounter";
 import Product from "./Product";
-export default function ProductCarousel({products, onItemClick, onStockChange, displayStock, className}){
+export default function ProductCarousel({products, onItemClick, onStockChange, displayStock, className, onHover=""}){
     return <Carousel opts={{align: "start"}} className= "w-full">
         <CarouselContent >
             { products.map((product, i) => (
                 <CarouselItem key= {i} className= {"mb-0" + className || "md:basis-1/2 lg:basis-1/4"}>
                     <Product 
-                        
+                        className= {onHover}
                         product= { {...product} }
                         onClick= { onItemClick && (() => onItemClick(product)) }
                         displayStock= {displayStock}

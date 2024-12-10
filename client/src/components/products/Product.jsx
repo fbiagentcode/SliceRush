@@ -1,8 +1,8 @@
 import { Card, CardHeader, CardContent, CardFooter } from "../ui/card";
 
 /** A card component for a product */
-export default function Product({product: {name, description, imageUrl, stock}, onClick, displayStock= false, children}){
-    return <Card onClick= {onClick} className= "flex flex-col justify-stretch bg-gradient-to-tr from-grey-500 from-5% via-grey-100 from 5% to-black rounded-2xl shadow-lg max-w-sm p-6 text-white border-none">
+export default function Product({product: {name, description, imageUrl, stock}, onClick, displayStock= false, children, className}){
+    return <Card onClick= {onClick} className=  {`${className} flex flex-col justify-stretch bg-gradient-to-tr from-grey-500 from-5% via-grey-100 from 5% to-black rounded-2xl shadow-lg max-w-sm p-6 text-white border-none`}>
         <CardHeader className= "">
             <h1 className= "text-xl tracking-tight">{name}</h1>
         </CardHeader>

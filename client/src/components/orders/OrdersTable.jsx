@@ -1,10 +1,22 @@
+import { useState } from "react";
 import OrderCard from "./OrderCard";
 
+import useWindowResizeListener from "../../hooks/useWindowResizeListener";
 import { ScrollArea } from "../ui/scroll-area";
 import { Table, TableBody, TableRow, TableHead, TableCell, TableHeader } from "../ui/table";
 
 export default function OrdersTable({orders, setOrders}){
-    return (<ScrollArea className= "h-[350px] rounded-lg border-none">
+    // const [ horizontal, setHorizontal ] = useState(false);
+
+    // useWindowResizeListener(() => {
+    //     if (window.innerWidth >= 780)
+    //         setHorizontal(true)
+    // });
+
+    return (<ScrollArea 
+        // orientation= {horizontal? "horizontal" : "vertical"} 
+        className= {`h-[350px] rounded-lg border-none`}
+    >
     <Table className= "bg-transparent border-none">
         <TableHeader>
             <TableRow className= "bg-grey-800 text-white border-none ">
