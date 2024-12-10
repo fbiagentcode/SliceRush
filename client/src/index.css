@@ -42,6 +42,11 @@
   src: url("../fonts/Inter_24pt-SemiBold.ttf")
 }
 
+@font-face{
+  font-family: "unison";
+  src: url("../fonts/TYPE JUICE - UNISON PRO BOLD ITALIC.OTF")
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

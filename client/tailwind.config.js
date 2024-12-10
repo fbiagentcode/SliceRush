@@ -23,6 +23,7 @@ export default {
 				neue: "neue",
 				"helvetica-ex": "helvetica-ex",
 				"semibold": "inter-semi-bold",
+				"unison": "unison",
 				sans: ["inter", ...fontFamily.sans]
 			},
     		borderRadius: {
@@ -31,7 +32,7 @@ export default {
     			sm: 'calc(var(--radius) - 4px)'
     		},
     		colors: {
-				'red': {DEFAULT: '#991b1b'},
+				'red': {DEFAULT: '#991b1b', 400: "#d76036", 500: "#b33922", 600: 'rgba(149,10,10,1)'},
 				'white': {DEFAULT: "#ffffff", 50: "#cccccc"},
 				'grey': { 
 					5: "#a3a3a3", 
