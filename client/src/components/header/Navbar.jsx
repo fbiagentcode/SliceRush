@@ -65,14 +65,14 @@ export default function Navbar(){
         exit="exit"
         transition= { {ease: "easeInOut", staggerChildren: 0.1, delayChildren: 0.2} }
         variants={listVariants}
-        className="font-helvetica tracking-tight sm:grid sm:grid-cols-2 sm:justify-center sm:gap-4 sm:mt-8"
+        className="mt-0 items-center font-helvetica tracking-tight sm:grid sm:grid-cols-3 sm:justify-center sm:gap-4 "
     >
                 <motion.div variants= {linkVariants}>
-                        <NavLink to= "/">Home</NavLink>
+                        <NavLink className= "transition-colors hover:text-white-50" to= "/">Home</NavLink>
                 </motion.div>
                 { user? <>
                     <motion.div variants= {linkVariants}>
-                            <NavLink to= { user.role === "customer"? "/dashboard" : "/admin-dashboard" }>
+                            <NavLink className= "transition-colors hover:text-white-50" to= { user.role === "customer"? "/dashboard" : "/admin-dashboard" }>
                                 Dashboard
                             </NavLink>
 
@@ -82,7 +82,7 @@ export default function Navbar(){
 
                             { isLoading? <ButtonLoading>Logging out...</ButtonLoading> :
                             <Button 
-                                className= "text-2xl bg-transparent text-grey-10"
+                                className= "ml-8 hover:bg-transparent hover:text-white-50 p-0 bg-transparent text-xl bg-transparent text-white"
                                 onClick= {handleLogout}
                             >
                                 Log Out

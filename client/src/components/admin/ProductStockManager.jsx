@@ -105,19 +105,19 @@ export default function ProductStockManager({products, setProducts}){
             { lowStockItems[0] && <>
                 <h2 className= "text-white text-lg p-4">LOW STOCK ITEMS</h2>
                 <p className= "p-4">These items need urgent restocking.</p>
-                <ProductCarousel products= {lowStockItems} onStockChange= {updateStock} displayStock= {true}/> 
+                <ProductCarousel className= "md:basis-1/2 lg:basis-1/4" products= {lowStockItems} onStockChange= {updateStock} displayStock= {true}/> 
             </> }
             <h2 className= "text-white text-lg mt-4 p-4">Cheeses</h2>
-            <ProductCarousel products= {cheeses} onStockChange= {updateStock} displayStock= {true}/>
+            <ProductCarousel className= "md:basis-1/2 lg:basis-1/4" products= {cheeses} onStockChange= {updateStock} displayStock= {true}/>
 
             <h2 className= "text-white text-lg mt-4 p-4">Bases</h2>
-            <ProductCarousel products= {bases} onStockChange= {updateStock} displayStock= {true}/>
+            <ProductCarousel className= "md:basis-1/2 lg:basis-1/4" products= {bases} onStockChange= {updateStock} displayStock= {true}/>
 
             <h2 className= "text-white text-lg mt-4 p-4">Sauces</h2>
-            <ProductCarousel products= {sauces} onStockChange= {updateStock} displayStock= {true}/>
+            <ProductCarousel className= "md:basis-1/2 lg:basis-1/4" products= {sauces} onStockChange= {updateStock} displayStock= {true}/>
 
             <h2 className= "text-white text-lg mt-4 p-4">Veggies</h2>
-            <ProductCarousel products= {veggies} onStockChange= {updateStock} displayStock= {true}/>
+            <ProductCarousel className= "md:basis-1/2 lg:basis-1/4" products= {veggies} onStockChange= {updateStock} displayStock= {true}/>
         </CardContent>
     </Card>);
 }

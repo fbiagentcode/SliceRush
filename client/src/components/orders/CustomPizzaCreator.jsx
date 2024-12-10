@@ -69,10 +69,10 @@ export default function CustomPizzaCreator({products, setOpen}){
     };
 
     return (
-    <Card className= " bg-transparent border-none text-white">
-        <CardContent className= "text-grey-10 flex flex-col justify-center gap-y-2 ">
+    <Card className= "w-[400px] bg-transparent border-none text-white">
+        <CardContent className= " text-grey-10 flex flex-col justify-center gap-y-2 ">
             <p className= "mt-4">Start by picking a base.</p>
-            <ProductCarousel products= {bases} onItemClick= {(base) => setBase(base)}/>
+            <ProductCarousel className= "" products= {bases} onItemClick= {(base) => setBase(base)}/>
             { error?.base && <p className= "text-white">{error.base}</p> }
 
             <p className= "mt-4">Pick a cheese type.</p>
